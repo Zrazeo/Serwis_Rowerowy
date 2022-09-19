@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "782960247279",
+    "project_id": "serwis-rowerowy-17a8b",
+    "storage_bucket": "serwis-rowerowy-17a8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782960247279:android:3aa67dd043adb22b5c361a",
+        "android_client_info": {
+          "package_name": "com.example.sklep_rowerowy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782960247279-3m0tqur1ttafmj4bsaotr1b9v7bt2fv9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa85choJy4fK0ksneHWa-cEyEO5PGyBPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782960247279-3m0tqur1ttafmj4bsaotr1b9v7bt2fv9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
