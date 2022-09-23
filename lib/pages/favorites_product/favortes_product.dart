@@ -1,21 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 
-class Product {
-  String image;
-  String name;
-  int price;
+class FavoritesProduct extends StatefulWidget {
+  FavoritesProduct({Key? key}) : super(key: key);
 
-  Product(this.image, this.name, this.price);
+  @override
+  State<FavoritesProduct> createState() => _FavoritesProductState();
 }
 
-class FavoritesProduct extends StatelessWidget {
-  FavoritesProduct({Key? key}) : super(key: key);
-  List products = [
-    Product('images/rower3.jpg', 'Rower', 200),
-    Product("images/rower2.jpg", 'rower', 2000),
-    Product("images/rower6.jpg", 'rower', 2000),
-  ];
+class _FavoritesProductState extends State<FavoritesProduct> {
+  CollectionReference bikes = FirebaseFirestore.instance.collection('bike');
+  final thisUser = FirebaseAuth.instance.currentUser!.displayName;
+
+  List? favorite;
+
+  getUserFavorite() async {
+    var user = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(thisUser)
+        .get();
+    setState(() {
+      favorite = user.data()!['favorite'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserFavorite();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -27,65 +42,61 @@ class FavoritesProduct extends StatelessWidget {
             "Ulubione",
           ),
         ),
-        body: ListView(
-          children: <Widget>[
-            Column(
-                children: products
-                    .map(
-                      (e) => Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(13),
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 10,
-                                spreadRadius: 3,
-                                offset: Offset(3, 4))
-                          ],
-                        ),
-                        child: ListTile(
-                          leading: Image.asset(
-                            e.image,
-                            fit: BoxFit.cover,
-                            width: 90,
-                            height: 100,
-                          ),
-                          title: Text(
-                            e.name,
-                            style: const TextStyle(fontSize: 25),
-                          ),
-                          subtitle: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("${e.price} zł"),
-                              const SizedBox(height: 10),
-                              SizedBox(
-                                height: 40,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Positioned(
-                                      left: 20,
-                                      bottom: 0,
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Image.network(
-                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRxHTyqjCdnZsEM-EkMvn3FDBkDADcaEZ3GN1YEdWFToAJm83nX&usqp=CAU'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList())
-          ],
+        body: StreamBuilder<QuerySnapshot>(
+          stream: bikes.snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              var doc = document.data() as Map;
+              print('favorite-----');
+              print(favorite);
+              print('doc.favorite-----');
+              print(doc['favorite']);
+              // if (favorite.contains(doc['favorite'])) {
+
+              // }
+              return Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(13),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                        spreadRadius: 3,
+                        offset: Offset(3, 4))
+                  ],
+                ),
+                child: ListTile(
+                  leading: Image.network(
+                    doc['picture'],
+                    fit: BoxFit.cover,
+                    width: 90,
+                    height: 100,
+                  ),
+                  title: Text(
+                    doc['model'],
+                    style: const TextStyle(fontSize: 25),
+                  ),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("${doc['price']} zł"),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              );
+            }).toList());
+          },
         ),
       );
 }

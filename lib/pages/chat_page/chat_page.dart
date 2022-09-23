@@ -74,7 +74,7 @@ class _ChatPageState extends State<ChatPage> {
                     }
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
+                      return const Center(child: CircularProgressIndicator());
                     }
                     int previousTimestamp = 0;
                     var tmp = DateTime.now().millisecondsSinceEpoch;

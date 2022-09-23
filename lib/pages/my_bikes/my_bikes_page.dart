@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
@@ -5,14 +6,14 @@ import 'package:sklep_rowerowy/pages/shopping_page/widgets/shopping_card.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ShoppingScene extends StatefulWidget {
-  const ShoppingScene({Key? key}) : super(key: key);
+class MyBikesPage extends StatefulWidget {
+  const MyBikesPage({Key? key}) : super(key: key);
 
   @override
-  ShoppingSceneState createState() => ShoppingSceneState();
+  MyBikesPageState createState() => MyBikesPageState();
 }
 
-class ShoppingSceneState extends State<ShoppingScene> {
+class MyBikesPageState extends State<MyBikesPage> {
   List<String> categories = [
     "Wszystkie",
     "Górski",
@@ -25,6 +26,7 @@ class ShoppingSceneState extends State<ShoppingScene> {
   int selectedCategories = 0;
   String searchedProduct = "";
   CollectionReference bikes = FirebaseFirestore.instance.collection('bike');
+  final thisUser = FirebaseAuth.instance.currentUser!.displayName;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -32,7 +34,7 @@ class ShoppingSceneState extends State<ShoppingScene> {
         child: Scaffold(
           appBar: AppBar(
             title: const Text(
-              "Znajdź rower",
+              "Moje ogłoszenia",
               style: TextStyle(color: Colors.white, fontSize: 32),
             ),
             backgroundColor: AppStandardsColors.backgroundColor,
@@ -63,27 +65,30 @@ class ShoppingSceneState extends State<ShoppingScene> {
                                 .map((DocumentSnapshot document) {
                           var doc = document.data() as Map;
                           String id = document.id;
-                          return getProductCard(
-                            id,
-                            doc['model'],
-                            doc['brand'],
-                            doc['owner'],
-                            doc['price'],
-                            doc['picture'],
-                            doc['type'],
-                            doc['brakes'],
-                            doc['color'],
-                            doc['description'],
-                            doc['frontShockAbsorber'],
-                            doc['numberOfGears'],
-                            doc['rearDerailleur'],
-                            doc['shockAbsorber'],
-                            doc['sizeOfFrame'],
-                            doc['typeMaleFemale'],
-                            doc['typeOfFrame'],
-                            doc['weight'],
-                            doc['wheelSize'],
-                          );
+                          if (doc['owner'] == thisUser) {
+                            return getProductCard(
+                              id,
+                              doc['model'],
+                              doc['brand'],
+                              doc['owner'],
+                              doc['price'],
+                              doc['picture'],
+                              doc['type'],
+                              doc['brakes'],
+                              doc['color'],
+                              doc['description'],
+                              doc['frontShockAbsorber'],
+                              doc['numberOfGears'],
+                              doc['rearDerailleur'],
+                              doc['shockAbsorber'],
+                              doc['sizeOfFrame'],
+                              doc['typeMaleFemale'],
+                              doc['typeOfFrame'],
+                              doc['weight'],
+                              doc['wheelSize'],
+                            );
+                          }
+                          return SizedBox.shrink();
                           // 'price', 'brand', 'model','owner', 'picture',
                         }).toList());
                       }),

@@ -5,9 +5,12 @@ import 'package:sklep_rowerowy/pages/chat_page/chats_list_page.dart';
 import 'package:sklep_rowerowy/pages/favorites_product/favortes_product.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in/google_sign_in.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in/login_page.dart';
+import 'package:sklep_rowerowy/pages/my_bikes/my_bikes_page.dart';
 import 'package:sklep_rowerowy/pages/shopping_page/shopping_scene.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../add_product/add_product_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -74,7 +77,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const ShoppingScene(),
+                  builder: (BuildContext context) => const AddProductPage(),
                 ),
               );
             },
@@ -104,7 +107,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const ShoppingScene(),
+                  builder: (BuildContext context) => const MyBikesPage(),
                 ),
               );
             },
@@ -125,7 +128,7 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.bookmark),
+            leading: const Icon(Icons.compare_arrows),
             title: const Text(
               'Porównywarka',
               style: TextStyle(fontSize: 24.0),

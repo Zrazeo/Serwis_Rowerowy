@@ -1,33 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:io';
 
-class AddProduct extends StatelessWidget {
-  const AddProduct({super.key});
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text("geeksforgeeks"),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Rower').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+class Storage {
+  final firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
-          return ListView(
-            children: snapshot.data!.docs.map((document) {
-              return Center(child: Text(document['Marka']));
-            }).toList(),
-          );
-        },
-      ),
-    );
+  Future<void> uploadFile(
+    String filePath,
+    String fileName,
+  ) async {
+    File file = File(filePath);
+
+    try {
+      await storage.ref('test/$fileName').putFile(file);
+    } on firebase_core.FirebaseException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<firebase_storage.ListResult> listFiles() async {
+    firebase_storage.ListResult result = await storage.ref('test').listAll();
+    result.items.forEach((firebase_storage.Reference ref) {
+      print('Plik: $ref');
+    });
+    return result;
+  }
+
+  Future<String> downloadURL(String imageName) async {
+    String downloadURL = await storage.ref('test/$imageName').getDownloadURL();
+
+    return downloadURL;
   }
 }

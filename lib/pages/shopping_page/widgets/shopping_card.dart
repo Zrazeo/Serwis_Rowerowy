@@ -1,13 +1,53 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sklep_rowerowy/pages/favorites_product/favortes_product.dart';
 import 'package:sklep_rowerowy/pages/product_details/product_details_page.dart';
 import 'package:sklep_rowerowy/pages/product_details/widgets/shopping_model.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 
 class ShoppingCard extends StatelessWidget {
-  final ShoppingModel product;
+  final String id;
+  final String owner;
+  final String picture;
+  final String price;
+  final String rearDereilleur;
+  final String shockAbsorber;
+  final String sizeOfFrame;
+  final String type;
+  final String typeMaleFemale;
+  final String typeOfFrame;
+  final String weight;
+  final String wheelSize;
+  final String brakes;
+  final String brand;
+  final String color;
+  final String description;
+  final String frontShockAbsorber;
+  final String model;
+  final String numberOfGrears;
 
-  const ShoppingCard(this.product, {Key? key}) : super(key: key);
+  const ShoppingCard({
+    Key? key,
+    required this.id,
+    required this.price,
+    required this.model,
+    required this.brand,
+    required this.owner,
+    required this.picture,
+    required this.type,
+    required this.rearDereilleur,
+    required this.shockAbsorber,
+    required this.sizeOfFrame,
+    required this.typeMaleFemale,
+    required this.typeOfFrame,
+    required this.weight,
+    required this.wheelSize,
+    required this.brakes,
+    required this.color,
+    required this.description,
+    required this.frontShockAbsorber,
+    required this.numberOfGrears,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -17,7 +57,27 @@ class ShoppingCard extends StatelessWidget {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => ProductDetailsPage(product),
+              builder: (context) => ProductDetailsPage(
+                id: id,
+                brand: brand,
+                brakes: brakes,
+                color: color,
+                description: description,
+                frontShockAbsorber: frontShockAbsorber,
+                model: model,
+                numberOfGrears: numberOfGrears,
+                owner: owner,
+                picture: picture,
+                price: price,
+                rearDereilleur: rearDereilleur,
+                shockAbsorber: shockAbsorber,
+                sizeOfFrame: sizeOfFrame,
+                type: type,
+                typeMaleFemale: typeMaleFemale,
+                typeOfFrame: typeOfFrame,
+                weight: weight,
+                wheelSize: wheelSize,
+              ),
             ),
           );
         },
@@ -49,7 +109,7 @@ class ShoppingCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            product.title,
+                            model,
                             style: const TextStyle(
                               color: AppStandardsColors.textDarkColor,
                               fontWeight: FontWeight.bold,
@@ -60,7 +120,7 @@ class ShoppingCard extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            product.info1,
+                            brand,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: AppStandardsColors.textLightColor,
@@ -68,7 +128,7 @@ class ShoppingCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            product.info2,
+                            type,
                             style: const TextStyle(
                               color: AppStandardsColors.textLightColor,
                               fontSize: 16,
@@ -78,7 +138,7 @@ class ShoppingCard extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            "${product.price} zł",
+                            "$price zł",
                             style: const TextStyle(
                                 color: AppStandardsColors.accentColor,
                                 fontWeight: FontWeight.bold,
@@ -97,12 +157,10 @@ class ShoppingCard extends StatelessWidget {
                           maxHeight: 125,
                           minHeight: 125,
                         ),
-                        child: Hero(
-                          tag: product.title,
-                          child: Image(
-                            image: product.productImage,
-                            fit: BoxFit.contain,
-                          ),
+                        child: Image.network(
+                          picture,
+                          // image: product.productImage,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),

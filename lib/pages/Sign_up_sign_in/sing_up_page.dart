@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in/google_sign_in.dart';
 
@@ -24,6 +29,9 @@ class _SingUpPageState extends State<SingUpPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+
+  File? imageFile;
 
   @override
   void dispose() {
@@ -61,6 +69,10 @@ class _SingUpPageState extends State<SingUpPage> {
                   style: TextStyle(fontSize: 20),
                 ),
               ),
+              GestureDetector(
+                onTap: _getFromGallery,
+                child: userAvatar(),
+              ),
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
@@ -73,6 +85,21 @@ class _SingUpPageState extends State<SingUpPage> {
                   validator: (email) =>
                       email != null && !EmailValidator.validate(email)
                           ? 'Wprowadz poprawny email'
+                          : null,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Nazwa uzytkownika',
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (username) =>
+                      username != null && username.length < 4
+                          ? 'Wprowadz nazwe uzytkownika'
                           : null,
                 ),
               ),
@@ -138,6 +165,83 @@ class _SingUpPageState extends State<SingUpPage> {
         ),
       ),
     );
+  }
+
+  UnconstrainedBox userAvatar() {
+    return UnconstrainedBox(
+      child: Container(
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black45,
+            width: 3,
+          ),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Stack(
+          children: [
+            imageFile == null
+                ? const Opacity(
+                    opacity: 0.25,
+                    child: Image(
+                      image: AssetImage('images/avatar.png'),
+                    ),
+                  )
+                : Opacity(
+                    opacity: 0.75,
+                    child: SizedBox(
+                      width: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.file(imageFile!),
+                      ),
+                    ),
+                  ),
+            const Center(
+              child: Icon(
+                Icons.add,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxHeight: 300,
+      maxWidth: 300,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<String> uploadFile() async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    String typeOfFile = imageFile!.path.substring(imageFile!.path.length - 3);
+    try {
+      await storage
+          .ref('avatar/${usernameController.text}.$typeOfFile')
+          .putFile(imageFile!);
+    } on FirebaseStorage catch (e) {
+      print(e);
+    }
+    return downloadUrl(storage, typeOfFile);
+  }
+
+  Future<String> downloadUrl(FirebaseStorage storage, String typeOfFile) {
+    Future<String> downloadUrl = storage
+        .ref('avatar/${usernameController.text}.$typeOfFile')
+        .getDownloadURL();
+    return downloadUrl;
   }
 
   Future nativSignUp() async {
