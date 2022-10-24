@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sklep_rowerowy/pages/favorites_product/favortes_product.dart';
+
 import 'package:sklep_rowerowy/pages/product_details/product_details_page.dart';
-import 'package:sklep_rowerowy/pages/product_details/widgets/shopping_model.dart';
+
 import 'package:sklep_rowerowy/style/colors.dart';
 
 class ShoppingCard extends StatelessWidget {
@@ -57,7 +57,7 @@ class ShoppingCard extends StatelessWidget {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => ProductDetailsPage(
+              builder: (context) => ProductDetailPage(
                 id: id,
                 brand: brand,
                 brakes: brakes,

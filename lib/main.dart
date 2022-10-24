@@ -5,9 +5,6 @@ import 'package:sklep_rowerowy/pages/Sign_up_sign_in/navigator_login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in/utils.dart';
 
-import 'pages/add_product/add_product.dart';
-import 'pages/add_product/add_product_page.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
