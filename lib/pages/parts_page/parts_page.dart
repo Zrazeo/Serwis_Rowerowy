@@ -121,17 +121,7 @@ class PartsSceneState extends State<PartsScene> {
     String picture,
     String owner,
   ) {
-    if (searchedProduct == "") {
-      return PartsCard(
-        id: index,
-        name: name,
-        brand: brand,
-        description: description,
-        price: price,
-        picture: picture,
-        owner: owner,
-      );
-    } else {
+    if (searchedProduct != "") {
       if (name.toLowerCase().contains(searchedProduct.toLowerCase())) {
         return PartsCard(
           id: index,
@@ -145,6 +135,16 @@ class PartsSceneState extends State<PartsScene> {
       } else {
         return const SizedBox();
       }
+    } else {
+      return PartsCard(
+        id: index,
+        name: name,
+        brand: brand,
+        description: description,
+        price: price,
+        picture: picture,
+        owner: owner,
+      );
     }
   }
 }
