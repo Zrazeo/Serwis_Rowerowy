@@ -98,8 +98,6 @@ class ChoicePage extends StatelessWidget {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-                  // mainAxisSize: MainAxisSize.min,
                   children: const [
                     Text(
                       'Dodaj ogłoszenie \nczęści rowerowych',

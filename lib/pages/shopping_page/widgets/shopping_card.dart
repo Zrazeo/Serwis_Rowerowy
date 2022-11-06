@@ -159,7 +159,6 @@ class ShoppingCard extends StatelessWidget {
                         ),
                         child: Image.network(
                           picture,
-                          // image: product.productImage,
                           fit: BoxFit.fill,
                         ),
                       ),

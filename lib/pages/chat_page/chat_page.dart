@@ -103,7 +103,6 @@ class _ChatPageState extends State<ChatPage> {
                               timestamp: doc['createdAt'],
                               previousTimestamp: previousTimestamp,
                               isMe: doc['username'] == thisUser!.displayName,
-                              // key: ValueKey(document.id),
                             );
                           }).toList(),
                         ),

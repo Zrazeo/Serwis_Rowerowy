@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sklep_rowerowy/pages/product_details/product_details_page.dart';
-
 import 'package:sklep_rowerowy/style/colors.dart';
 
 import '../parts_details/patrts_details.dart';
@@ -126,7 +124,6 @@ class PartsCard extends StatelessWidget {
                         ),
                         child: Image.network(
                           picture,
-                          // image: product.productImage,
                           fit: BoxFit.fill,
                         ),
                       ),

@@ -84,7 +84,6 @@ class MyBikesPageState extends State<MyBikesPage> {
                               );
                             }
                             return const SizedBox.shrink();
-                            // 'price', 'brand', 'model','owner', 'picture',
                           }).toList());
                         }),
                   ),
@@ -122,7 +121,6 @@ class MyBikesPageState extends State<MyBikesPage> {
                               );
                             }
                             return const SizedBox.shrink();
-                            // 'price', 'brand', 'model','owner', 'picture',
                           }).toList());
                         }),
                   ),

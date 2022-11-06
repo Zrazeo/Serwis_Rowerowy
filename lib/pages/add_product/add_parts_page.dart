@@ -1,13 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_auth/firebase_auth.dart%20';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sklep_rowerowy/pages/add_product/add_product.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../style/colors.dart';
@@ -21,13 +18,10 @@ class AddPartsPage extends StatefulWidget {
   State<AddPartsPage> createState() => _AddPartsPageState();
 }
 
-// PickedFile? pickedFile;
-
 class _AddPartsPageState extends State<AddPartsPage> {
   TextEditingController brand = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController price = TextEditingController();
-  // TextEditingController picture = TextEditingController();
   TextEditingController description = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   final formKey = GlobalKey<FormState>();
@@ -37,7 +31,6 @@ class _AddPartsPageState extends State<AddPartsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final Storage storage = Storage();
     String uid = const Uuid().v4();
 
     return Scaffold(
@@ -87,6 +80,7 @@ class _AddPartsPageState extends State<AddPartsPage> {
                           textStyle: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       onPressed: () async {
+                        // ignore: deprecated_member_use
                         PickedFile? pickedFile = await ImagePicker().getImage(
                           source: ImageSource.gallery,
                           maxHeight: 300,
@@ -102,6 +96,7 @@ class _AddPartsPageState extends State<AddPartsPage> {
                         try {
                           await storage.ref('parts/$uid').putFile(imageFile!);
                         } on FirebaseStorage catch (e) {
+                          // ignore: avoid_print
                           print(e);
                         }
                         String url =
@@ -154,7 +149,6 @@ class _AddPartsPageState extends State<AddPartsPage> {
       height: 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        // controller: controller,
         validator: (value) => value != null ? null : 'Pole nie może być puste',
         controller: controller,
         cursorColor: Theme.of(context).backgroundColor,

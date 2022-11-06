@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/date_symbol_data_local.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -20,7 +20,6 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Intl.defaultLocale = 'pl';
     DateTime time = DateTime.fromMillisecondsSinceEpoch(timestamp);
     DateTime previousTime =
         DateTime.fromMillisecondsSinceEpoch(previousTimestamp);

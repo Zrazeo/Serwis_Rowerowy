@@ -1,13 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_auth/firebase_auth.dart%20';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sklep_rowerowy/pages/add_product/add_product.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../style/colors.dart';
@@ -20,8 +19,6 @@ class AddProductPage extends StatefulWidget {
   @override
   State<AddProductPage> createState() => _AddProductPageState();
 }
-
-// PickedFile? pickedFile;
 
 class _AddProductPageState extends State<AddProductPage> {
   TextEditingController brand = TextEditingController();
@@ -40,7 +37,6 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController wheelSize = TextEditingController();
   TextEditingController typeMaleFemale = TextEditingController();
   TextEditingController weight = TextEditingController();
-  // TextEditingController picture = TextEditingController();
   TextEditingController description = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   final formKey = GlobalKey<FormState>();
@@ -55,35 +51,26 @@ class _AddProductPageState extends State<AddProductPage> {
   dropdownButtonFormField(List<String> listItem, String dropdownValue,
       Function function, String name) {
     return Container(
-      // padding: const EdgeInsets.only(b: 10),
-      margin: EdgeInsets.symmetric(vertical: 7),
+      margin: const EdgeInsets.symmetric(vertical: 7),
       height: 67,
       child: DropdownButtonFormField(
         decoration: InputDecoration(
           labelText: name,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            //<-- SEE HERE
             borderSide: const BorderSide(color: Colors.black),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            //<-- SEE HERE
             borderSide: const BorderSide(color: Colors.black),
           ),
           filled: true,
           fillColor: Colors.white,
         ),
-        // dropdownColor: Colors.greenAccent,
         value: dropdownValue,
         onChanged: (String? newValue) {
           function(newValue);
         },
-        // hint: Text(
-        //   "fndsofnsdnioafn",
-        //   style: const TextStyle(fontSize: 20, color: Colors.black),
-        //   textAlign: TextAlign.center,
-        // ),
         items: listItem.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -123,7 +110,6 @@ class _AddProductPageState extends State<AddProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final Storage storage = Storage();
     String uid = const Uuid().v4();
 
     return Scaffold(
@@ -146,20 +132,11 @@ class _AddProductPageState extends State<AddProductPage> {
               children: [
                 bikeTextField(context, brand, 'Marka'),
                 bikeTextField(context, model, 'Model'),
-                // const Padding(
-                //   padding: EdgeInsets.all(7.0),
-                //   child: Text(
-                //     "Rodzaj",
-                //     style: TextStyle(fontSize: 18, color: Colors.black),
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
                 dropdownButtonFormField(
                     ['Górski', 'Miejski', 'BMX', 'Cross', 'Treking'],
                     dropdownValueType,
                     changeType,
                     'Rodzaj'),
-                // bikeTextField(context, type, 'Rodzaj'),
                 bikeTextField(context, price, 'Cena'),
                 bikeTextField(context, weight, 'Waga'),
                 bikeTextField(context, color, 'Kolor'),
@@ -170,48 +147,21 @@ class _AddProductPageState extends State<AddProductPage> {
                 bikeTextField(context, numberOfGears, 'Liczba przerzutek'),
                 bikeTextField(context, rearDerailleur, 'Przerzutka tylna'),
                 bikeTextField(context, frontDerailleur, 'Przerzutka przednia'),
-                // const Padding(
-                //   padding: EdgeInsets.all(7.0),
-                //   child: Text(
-                //     "Rodzaj ramy",
-                //     style: TextStyle(fontSize: 18, color: Colors.black),
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
                 dropdownButtonFormField(
                     ['Stal', 'Aluminium', 'Carbon', 'Magnez', 'Tytan'],
                     dropdownValueTypeOfFrame,
                     changeTypeOfFrame,
                     'Rodzaj ramy'),
-                // //bikeTextField(context, typeOfFrame, 'Rozmiar ramy'),
-                // const Padding(
-                //   padding: EdgeInsets.all(7.0),
-                //   child: Text(
-                //     "Rozmiar ramy",
-                //     style: TextStyle(fontSize: 18, color: Colors.black),
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
                 dropdownButtonFormField(
                     ['S', 'M', 'L', 'XL'],
                     dropdownValueSizeOfFrame,
                     changeSizeOfFrame,
                     'Rozmiar ramy'),
-                //bikeTextField(context, sizeOfFrame, 'Rozmiar ramy'),
-                // const Padding(
-                //   padding: EdgeInsets.all(7.0),
-                //   child: Text(
-                //     "Rodzaj damski/męski",
-                //     style: TextStyle(fontSize: 18, color: Colors.black),
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
                 dropdownButtonFormField(
                     ['Damski', 'Męski'],
                     dropdownValueTypeMaleFemale,
                     changeTypeMaleFemale,
                     'Rodzaj damski/męski'),
-                //bikeTextField(context, typeMaleFemale, 'Rodzaj damski/męski'),
                 bikeTextField(context, wheelSize, 'Rozmiar kół'),
                 bikeTextField(context, description, 'Opis', size: 5),
                 if (downloadURL != null)

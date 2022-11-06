@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sklep_rowerowy/main.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chat_page.dart';
 import 'package:sklep_rowerowy/this_user.dart';
@@ -117,18 +116,6 @@ class ProductDetailPageState extends State<ProductDetailPage>
     });
   }
 
-  // addStringToSF() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('stringValue', "abc");
-  // }
-
-  // getStringValuesSF() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   //Return String
-  //   String? stringValue = prefs.getString('stringValue');
-  //   return stringValue;
-  // }
-
   Widget _appBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -170,9 +157,6 @@ class ProductDetailPageState extends State<ProductDetailPage>
                 } else {}
               }
 
-              print(compareFirstBike);
-              print(compareSecondBike);
-
               setState(() {
                 isCompere = !isCompere;
               });
@@ -203,30 +187,12 @@ class ProductDetailPageState extends State<ProductDetailPage>
     IconData icon, {
     Color color = const Color.fromARGB(255, 178, 93, 40),
     double size = 20,
-    // double padding = 10,
     bool isOutLine = false,
     Function? onPressed,
   }) {
     return SizedBox(
       height: 40,
       width: 40,
-      // padding: EdgeInsets.all(padding),
-      // margin: EdgeInsets.all(padding),
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //       color: const Color(0xffa8a09b),
-      //       style: isOutLine ? BorderStyle.solid : BorderStyle.none),
-      //   borderRadius: const BorderRadius.all(Radius.circular(13)),
-      //   color:
-      //       isOutLine ? Colors.transparent : AppStandardsColors.backgroundColor,
-      //   // boxShadow: const <BoxShadow>[
-      //   //   BoxShadow(
-      //   //       color: Color(0xfff8f8f8),
-      //   //       blurRadius: 5,
-      //   //       spreadRadius: 10,
-      //   //       offset: Offset(5, 5)),
-      //   // ],
-      // ),
       child: Icon(icon, color: color, size: size),
     ).ripple(() {
       if (onPressed != null) {
@@ -248,50 +214,16 @@ class ProductDetailPageState extends State<ProductDetailPage>
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          // const TitleText(
-          //   text: "AIP",
-          //   fontSize: 160,
-          //   color: Color(0xffE1E2E4),
-          // ),
           Image.network(
             widget.picture,
             height: 300,
             width: double.infinity,
             fit: BoxFit.fitWidth,
-            // fit: BoxFit.cover,
           ),
         ],
       ),
     );
   }
-
-  // Widget _thumbnail(String image) {
-  //   return AnimatedBuilder(
-  //     animation: animation,
-  //     //  builder: null,
-  //     builder: (context, child) => AnimatedOpacity(
-  //       opacity: animation.value,
-  //       duration: const Duration(milliseconds: 500),
-  //       child: child,
-  //     ),
-  //     child: Container(
-  //       margin: const EdgeInsets.symmetric(horizontal: 10),
-  //       child: Container(
-  //         height: 40,
-  //         width: 50,
-  //         decoration: BoxDecoration(
-  //           border: Border.all(
-  //             color: const Color(0xffE1E2E4),
-  //           ),
-  //           borderRadius: const BorderRadius.all(Radius.circular(13)),
-  //           // color: Theme.of(context).backgroundColor,
-  //         ),
-  //         child: Image.asset(image),
-  //       ).ripple(() {},
-  //           borderRadius: const BorderRadius.all(Radius.circular(13))),
-  //     ),
-  //   );
-  // }
 
   Widget _detailWidget() {
     return DraggableScrollableSheet(
@@ -463,6 +395,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
       FirebaseFirestore.instance.collection('messages').doc(id1).update({});
     }
 
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute<void>(

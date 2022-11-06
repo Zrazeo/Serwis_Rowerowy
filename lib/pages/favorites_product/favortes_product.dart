@@ -116,7 +116,6 @@ class _FavoritesProductState extends State<FavoritesProduct> {
     String weight,
     String wheelSize,
   ) {
-    //THIS IS THE SPAGHETTIEST CODE I VE WRITTEN IN YEARS OH DEAR GOD
     if (selectedCategories != 0) {
       if (type == categories[selectedCategories]) {
         if (searchedProduct == "") {
@@ -195,10 +194,7 @@ class _FavoritesProductState extends State<FavoritesProduct> {
           wheelSize: wheelSize,
         );
       } else {
-        if (
-            // products[index]
-            //   .title
-            model.toLowerCase().contains(searchedProduct.toLowerCase())) {
+        if (model.toLowerCase().contains(searchedProduct.toLowerCase())) {
           return ShoppingCard(
             id: index,
             model: model,

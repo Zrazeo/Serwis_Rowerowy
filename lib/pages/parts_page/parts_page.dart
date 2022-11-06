@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/shopping_card.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -64,7 +62,6 @@ class PartsSceneState extends State<PartsScene> {
                             doc['price'],
                             doc['picture'],
                             doc['owner']);
-                        // 'price', 'brand', 'model','owner', 'picture',
                       }).toList());
                     }),
               ),

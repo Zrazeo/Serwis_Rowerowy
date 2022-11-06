@@ -19,7 +19,6 @@ String compareSecondBike = '';
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Serwis ogłoszeniowy do rowerów',
           home: const NavigatorLogin(),
-          // home: addProductPage(),
         ),
       );
 }

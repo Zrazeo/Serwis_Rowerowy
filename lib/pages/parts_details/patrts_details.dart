@@ -121,7 +121,6 @@ class PartsDetailPageState extends State<PartsDetailPage>
     IconData icon, {
     Color color = const Color.fromARGB(255, 178, 93, 40),
     double size = 20,
-    // double padding = 10,
     bool isOutLine = false,
     Function? onPressed,
   }) {
@@ -149,17 +148,11 @@ class PartsDetailPageState extends State<PartsDetailPage>
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          // const TitleText(
-          //   text: "AIP",
-          //   fontSize: 160,
-          //   color: Color(0xffE1E2E4),
-          // ),
           Image.network(
             widget.picture,
             height: 300,
             width: double.infinity,
             fit: BoxFit.fitWidth,
-            // fit: BoxFit.cover,
           ),
         ],
       ),

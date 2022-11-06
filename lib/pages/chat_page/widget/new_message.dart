@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,8 +24,6 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     void _sendMessage() async {
-      // FocusScope.of(context).unfocus();
-
       final user = FirebaseAuth.instance.currentUser;
 
       final userData = await FirebaseFirestore.instance

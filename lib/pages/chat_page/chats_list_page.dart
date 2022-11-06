@@ -54,7 +54,6 @@ class ChatsListPage extends StatelessWidget {
                                   onTap: () async {
                                     bool user1;
                                     try {
-                                      // print(tmp.data()['user1']);
                                       user1 = true;
                                     } catch (_) {
                                       user1 = false;

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
@@ -86,7 +85,6 @@ class ShoppingSceneState extends State<ShoppingScene> {
                           doc['weight'],
                           doc['wheelSize'],
                         );
-                        // 'price', 'brand', 'model','owner', 'picture',
                       }).toList());
                     }),
               ),
@@ -221,7 +219,6 @@ class ShoppingSceneState extends State<ShoppingScene> {
     String weight,
     String wheelSize,
   ) {
-    //THIS IS THE SPAGHETTIEST CODE I VE WRITTEN IN YEARS OH DEAR GOD
     if (selectedCategories != 0) {
       if (type == categories[selectedCategories]) {
         if (searchedProduct == "") {
@@ -300,10 +297,7 @@ class ShoppingSceneState extends State<ShoppingScene> {
           wheelSize: wheelSize,
         );
       } else {
-        if (
-            // products[index]
-            //   .title
-            model.toLowerCase().contains(searchedProduct.toLowerCase())) {
+        if (model.toLowerCase().contains(searchedProduct.toLowerCase())) {
           return ShoppingCard(
             id: index,
             model: model,
