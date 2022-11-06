@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sklep_rowerowy/pages/parts_page/parts_details_page.dart';
 
 import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/shopping_card.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'my_bikes_details.dart';
 
 class MyBikesPage extends StatefulWidget {
   const MyBikesPage({Key? key}) : super(key: key);
@@ -14,193 +16,124 @@ class MyBikesPage extends StatefulWidget {
 }
 
 class MyBikesPageState extends State<MyBikesPage> {
-  List<String> categories = [
-    "Wszystkie",
-    "Górski",
-    "Miejski",
-    "BMX",
-    "Cross",
-    "Treking"
-  ];
-
-  int selectedCategories = 0;
-  String searchedProduct = "";
   CollectionReference bikes = FirebaseFirestore.instance.collection('bike');
+  CollectionReference parts = FirebaseFirestore.instance.collection('parts');
   final thisUser = FirebaseAuth.instance.currentUser!.displayName;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              "Moje ogłoszenia",
-              style: TextStyle(color: Colors.white, fontSize: 32),
-            ),
-            backgroundColor: AppStandardsColors.backgroundColor,
-            elevation: 0,
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            "Moje ogłoszenia",
+            style: TextStyle(color: Colors.white, fontSize: 28),
           ),
-          drawer: const MyDrawer(),
-          body: Container(
-            color: AppStandardsColors.backgroundColor,
-            child: Column(
-              children: [
-                searchWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                bikeCategoryChooser(),
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                      stream: bikes.snapshots(),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView(
-                            children: snapshot.data!.docs
-                                .map((DocumentSnapshot document) {
-                          var doc = document.data() as Map;
-                          String id = document.id;
-                          if (doc['owner'] == thisUser) {
-                            return getProductCard(
-                              id,
-                              doc['model'],
-                              doc['brand'],
-                              doc['owner'],
-                              doc['price'],
-                              doc['picture'],
-                              doc['type'],
-                              doc['brakes'],
-                              doc['color'],
-                              doc['description'],
-                              doc['frontShockAbsorber'],
-                              doc['numberOfGears'],
-                              doc['rearDerailleur'],
-                              doc['shockAbsorber'],
-                              doc['sizeOfFrame'],
-                              doc['typeMaleFemale'],
-                              doc['typeOfFrame'],
-                              doc['weight'],
-                              doc['wheelSize'],
+          backgroundColor: AppStandardsColors.backgroundColor,
+          elevation: 0,
+          bottom: const TabBar(tabs: [
+            Tab(text: 'Rowery'),
+            Tab(text: 'Części'),
+          ]),
+        ),
+        drawer: const MyDrawer(),
+        body: TabBarView(
+          children: [
+            Container(
+              color: AppStandardsColors.backgroundColor,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: bikes.snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
                             );
                           }
-                          return SizedBox.shrink();
-                          // 'price', 'brand', 'model','owner', 'picture',
-                        }).toList());
-                      }),
-                ),
-              ],
+                          return ListView(
+                              children: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                            var doc = document.data() as Map;
+                            String id = document.id;
+                            if (doc['owner'] == thisUser) {
+                              return getProductCard(
+                                id,
+                                doc['model'],
+                                doc['brand'],
+                                doc['owner'],
+                                doc['price'],
+                                doc['picture'],
+                                doc['type'],
+                                doc['brakes'],
+                                doc['color'],
+                                doc['description'],
+                                doc['frontShockAbsorber'],
+                                doc['numberOfGears'],
+                                doc['rearDerailleur'],
+                                doc['shockAbsorber'],
+                                doc['sizeOfFrame'],
+                                doc['typeMaleFemale'],
+                                doc['typeOfFrame'],
+                                doc['weight'],
+                                doc['wheelSize'],
+                              );
+                            }
+                            return const SizedBox.shrink();
+                            // 'price', 'brand', 'model','owner', 'picture',
+                          }).toList());
+                        }),
+                  ),
+                ],
+              ),
             ),
-          ),
+            Container(
+              color: AppStandardsColors.backgroundColor,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: parts.snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return ListView(
+                              children: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                            var doc = document.data() as Map;
+                            String id = document.id;
+                            if (doc['owner'] == thisUser) {
+                              return getPartsCard(
+                                id,
+                                doc['name'],
+                                doc['brand'],
+                                doc['description'],
+                                doc['price'],
+                                doc['picture'],
+                                doc['owner'],
+                              );
+                            }
+                            return const SizedBox.shrink();
+                            // 'price', 'brand', 'model','owner', 'picture',
+                          }).toList());
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      );
-
-  Padding bikeCategoryChooser() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 4, 24, 0),
-      child: SizedBox(
-        height: 50,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: categories.length,
-            itemBuilder: (context, index) {
-              return index == selectedCategories
-                  ? selectedCategoryCard(categories[index])
-                  : unselectedCategoryCard(categories[index], index);
-            }),
       ),
     );
   }
-
-  Padding searchWidget() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-      child: TextField(
-        autofocus: false,
-        onChanged: (text) {
-          searchedProduct = text;
-          setState(() {});
-        },
-        style: const TextStyle(color: Colors.white, fontSize: 20),
-        cursorColor: Colors.white,
-        decoration: InputDecoration(
-          fillColor: AppStandardsColors.highlightColor,
-          filled: true,
-          border: OutlineInputBorder(
-            borderSide:
-                const BorderSide(color: AppStandardsColors.highlightColor),
-            borderRadius: BorderRadius.circular(18),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide:
-                const BorderSide(color: AppStandardsColors.highlightColor),
-            borderRadius: BorderRadius.circular(18),
-          ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide:
-                const BorderSide(color: AppStandardsColors.highlightColor),
-            borderRadius: BorderRadius.circular(18),
-          ),
-          hintText: "Wyszukaj",
-          hintStyle: const TextStyle(color: Colors.white, fontSize: 20),
-          prefixIcon: const Icon(Icons.search, color: Colors.white, size: 28),
-        ),
-      ),
-    );
-  }
-
-  Widget selectedCategoryCard(String category) => GestureDetector(
-        onTap: () {},
-        child: Card(
-          elevation: 0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          color: AppStandardsColors.highlightColor,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-            child: Center(
-              child: Text(
-                category,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              ),
-            ),
-          ),
-        ),
-      );
-
-  Widget unselectedCategoryCard(String category, int index) => GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedCategories = index;
-          });
-        },
-        child: Card(
-          elevation: 0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          color: Colors.transparent,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-            child: Center(
-              child: Text(
-                category,
-                style: const TextStyle(
-                  color: AppStandardsColors.unselectedColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
 
   Widget getProductCard(
     String index,
@@ -223,126 +156,46 @@ class MyBikesPageState extends State<MyBikesPage> {
     String weight,
     String wheelSize,
   ) {
-    //THIS IS THE SPAGHETTIEST CODE I VE WRITTEN IN YEARS OH DEAR GOD
-    if (selectedCategories != 0) {
-      if (type == categories[selectedCategories]) {
-        if (searchedProduct == "") {
-          return ShoppingCard(
-            id: index,
-            model: model,
-            brand: brand,
-            owner: owner,
-            price: price,
-            picture: picture,
-            type: type,
-            brakes: brakes,
-            color: color,
-            description: description,
-            frontShockAbsorber: frontShockAbsorber,
-            numberOfGrears: numberOfGrears,
-            rearDereilleur: rearDereilleur,
-            shockAbsorber: shockAbsorber,
-            sizeOfFrame: sizeOfFrame,
-            typeMaleFemale: typeMaleFemale,
-            typeOfFrame: typeOfFrame,
-            weight: weight,
-            wheelSize: wheelSize,
-          );
-        } else {
-          if (model.toLowerCase().contains(searchedProduct.toLowerCase())) {
-            return ShoppingCard(
-              id: index,
-              model: model,
-              brand: brand,
-              owner: owner,
-              price: price,
-              picture: picture,
-              type: type,
-              brakes: brakes,
-              color: color,
-              description: description,
-              frontShockAbsorber: frontShockAbsorber,
-              numberOfGrears: numberOfGrears,
-              rearDereilleur: rearDereilleur,
-              shockAbsorber: shockAbsorber,
-              sizeOfFrame: sizeOfFrame,
-              typeMaleFemale: typeMaleFemale,
-              typeOfFrame: typeOfFrame,
-              weight: weight,
-              wheelSize: wheelSize,
-            );
-          } else {
-            return const SizedBox();
-          }
-        }
-      } else {
-        return const SizedBox();
-      }
-    } else {
-      if (searchedProduct == "") {
-        return ShoppingCard(
-          id: index,
-          model: model,
-          brand: brand,
-          owner: owner,
-          price: price,
-          picture: picture,
-          type: type,
-          brakes: brakes,
-          color: color,
-          description: description,
-          frontShockAbsorber: frontShockAbsorber,
-          numberOfGrears: numberOfGrears,
-          rearDereilleur: rearDereilleur,
-          shockAbsorber: shockAbsorber,
-          sizeOfFrame: sizeOfFrame,
-          typeMaleFemale: typeMaleFemale,
-          typeOfFrame: typeOfFrame,
-          weight: weight,
-          wheelSize: wheelSize,
-        );
-      } else {
-        if (
-            // products[index]
-            //   .title
-            model.toLowerCase().contains(searchedProduct.toLowerCase())) {
-          return ShoppingCard(
-            id: index,
-            model: model,
-            brand: brand,
-            owner: owner,
-            price: price,
-            picture: picture,
-            type: type,
-            brakes: brakes,
-            color: color,
-            description: description,
-            frontShockAbsorber: frontShockAbsorber,
-            numberOfGrears: numberOfGrears,
-            rearDereilleur: rearDereilleur,
-            shockAbsorber: shockAbsorber,
-            sizeOfFrame: sizeOfFrame,
-            typeMaleFemale: typeMaleFemale,
-            typeOfFrame: typeOfFrame,
-            weight: weight,
-            wheelSize: wheelSize,
-          );
-        } else {
-          return const SizedBox();
-        }
-      }
-    }
+    return MyBikesDetails(
+      id: index,
+      model: model,
+      brand: brand,
+      owner: owner,
+      price: price,
+      picture: picture,
+      type: type,
+      brakes: brakes,
+      color: color,
+      description: description,
+      frontShockAbsorber: frontShockAbsorber,
+      numberOfGrears: numberOfGrears,
+      rearDereilleur: rearDereilleur,
+      shockAbsorber: shockAbsorber,
+      sizeOfFrame: sizeOfFrame,
+      typeMaleFemale: typeMaleFemale,
+      typeOfFrame: typeOfFrame,
+      weight: weight,
+      wheelSize: wheelSize,
+    );
   }
 
-  double getDividerHeight(String type) {
-    if (selectedCategories == 0) {
-      return 5;
-    } else {
-      if (type == categories[selectedCategories]) {
-        return 5;
-      } else {
-        return 0;
-      }
-    }
+  Widget getPartsCard(
+    String index,
+    String name,
+    String brand,
+    String description,
+    String price,
+    String picture,
+    String owner,
+  ) {
+    return PartsCard(
+      id: index,
+      name: name,
+      brand: brand,
+      description: description,
+      price: price,
+      picture: picture,
+      owner: owner,
+    );
   }
 }

@@ -14,14 +14,14 @@ class Storage {
     File file = File(filePath);
 
     try {
-      await storage.ref('test/$fileName').putFile(file);
+      await storage.ref('parts/$fileName').putFile(file);
     } on firebase_core.FirebaseException catch (e) {
       print(e);
     }
   }
 
   Future<firebase_storage.ListResult> listFiles() async {
-    firebase_storage.ListResult result = await storage.ref('test').listAll();
+    firebase_storage.ListResult result = await storage.ref('parts').listAll();
     for (var ref in result.items) {
       print('Plik: $ref');
     }

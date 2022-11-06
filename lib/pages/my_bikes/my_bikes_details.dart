@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +7,7 @@ import 'package:sklep_rowerowy/pages/product_details/product_details_page.dart';
 
 import 'package:sklep_rowerowy/style/colors.dart';
 
-class ShoppingCard extends StatelessWidget {
+class MyBikesDetails extends StatelessWidget {
   final String id;
   final String owner;
   final String picture;
@@ -26,7 +28,7 @@ class ShoppingCard extends StatelessWidget {
   final String model;
   final String numberOfGrears;
 
-  const ShoppingCard({
+  const MyBikesDetails({
     Key? key,
     required this.id,
     required this.price,
@@ -159,11 +161,17 @@ class ShoppingCard extends StatelessWidget {
                         ),
                         child: Image.network(
                           picture,
-                          // image: product.productImage,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
+                  ),
+                  IconButton(
+                    onPressed: (() async => await FirebaseFirestore.instance
+                        .collection('bike')
+                        .doc(id)
+                        .delete()),
+                    icon: const Icon(Icons.delete),
                   ),
                 ],
               ),

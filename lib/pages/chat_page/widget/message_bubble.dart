@@ -67,9 +67,7 @@ class MessageBubble extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width * 0.8,
               ),
               decoration: BoxDecoration(
-                color: isMe
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).accentColor,
+                color: isMe ? Theme.of(context).primaryColor : Colors.grey[350],
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(12),
                   topRight: const Radius.circular(12),
@@ -97,7 +95,7 @@ class MessageBubble extends StatelessWidget {
                     message,
                     style: TextStyle(
                       fontSize: 16,
-                      color: isMe ? Theme.of(context).errorColor : Colors.black,
+                      color: isMe ? Colors.white : Colors.black,
                     ),
                   ),
                 ],

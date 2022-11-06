@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
@@ -27,72 +28,74 @@ class ShoppingSceneState extends State<ShoppingScene> {
   CollectionReference bikes = FirebaseFirestore.instance.collection('bike');
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              "Znajdź rower",
-              style: TextStyle(color: Colors.white, fontSize: 32),
-            ),
-            backgroundColor: AppStandardsColors.backgroundColor,
-            elevation: 0,
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            "Znajdź rower",
+            style: TextStyle(color: Colors.white, fontSize: 28),
           ),
-          drawer: const MyDrawer(),
-          body: Container(
-            color: AppStandardsColors.backgroundColor,
-            child: Column(
-              children: [
-                searchWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                bikeCategoryChooser(),
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                      stream: bikes.snapshots(),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView(
-                            children: snapshot.data!.docs
-                                .map((DocumentSnapshot document) {
-                          var doc = document.data() as Map;
-                          String id = document.id;
-                          return getProductCard(
-                            id,
-                            doc['model'],
-                            doc['brand'],
-                            doc['owner'],
-                            doc['price'],
-                            doc['picture'],
-                            doc['type'],
-                            doc['brakes'],
-                            doc['color'],
-                            doc['description'],
-                            doc['frontShockAbsorber'],
-                            doc['numberOfGears'],
-                            doc['rearDerailleur'],
-                            doc['shockAbsorber'],
-                            doc['sizeOfFrame'],
-                            doc['typeMaleFemale'],
-                            doc['typeOfFrame'],
-                            doc['weight'],
-                            doc['wheelSize'],
-                          );
-                          // 'price', 'brand', 'model','owner', 'picture',
-                        }).toList());
-                      }),
-                ),
-              ],
-            ),
+          backgroundColor: AppStandardsColors.backgroundColor,
+          elevation: 0,
+        ),
+        drawer: const MyDrawer(),
+        body: Container(
+          color: AppStandardsColors.backgroundColor,
+          child: Column(
+            children: [
+              searchWidget(),
+              const SizedBox(
+                height: 20,
+              ),
+              bikeCategoryChooser(),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: bikes.snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView(
+                          children: snapshot.data!.docs
+                              .map((DocumentSnapshot document) {
+                        var doc = document.data() as Map;
+                        String id = document.id;
+                        return getProductCard(
+                          id,
+                          doc['model'],
+                          doc['brand'],
+                          doc['owner'],
+                          doc['price'],
+                          doc['picture'],
+                          doc['type'],
+                          doc['brakes'],
+                          doc['color'],
+                          doc['description'],
+                          doc['frontShockAbsorber'],
+                          doc['numberOfGears'],
+                          doc['rearDerailleur'],
+                          doc['shockAbsorber'],
+                          doc['sizeOfFrame'],
+                          doc['typeMaleFemale'],
+                          doc['typeOfFrame'],
+                          doc['weight'],
+                          doc['wheelSize'],
+                        );
+                        // 'price', 'brand', 'model','owner', 'picture',
+                      }).toList());
+                    }),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Padding bikeCategoryChooser() {
     return Padding(

@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chat_page.dart';
 
+import '../../style/colors.dart';
+
 class ChatsListPage extends StatelessWidget {
   const ChatsListPage({super.key});
 
@@ -14,7 +16,15 @@ class ChatsListPage extends StatelessWidget {
     var mediaQuery = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Czat",
+          style: TextStyle(color: Colors.white, fontSize: 28),
+        ),
+        backgroundColor: AppStandardsColors.backgroundColor,
+        elevation: 0,
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: users.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -35,8 +45,9 @@ class ChatsListPage extends StatelessWidget {
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                     var doc = document.data() as Map;
                     return Container(
-                      child: user!.displayName == doc['user1'] ||
-                              user.displayName == doc['user2']
+                      child: (user!.displayName == doc['user1'] ||
+                                  user.displayName == doc['user2']) &&
+                              doc['lastMessage'] != null
                           ? Column(
                               children: [
                                 GestureDetector(

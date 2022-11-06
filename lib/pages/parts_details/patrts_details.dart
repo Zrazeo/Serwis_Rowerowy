@@ -3,69 +3,41 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sklep_rowerowy/main.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chat_page.dart';
-import 'package:sklep_rowerowy/this_user.dart';
 
 import '../../style/colors.dart';
 
-class ProductDetailPage extends StatefulWidget {
+class PartsDetailPage extends StatefulWidget {
   final String id;
   final String owner;
+  final String brand;
   final String picture;
   final String price;
-  final String rearDereilleur;
-  final String shockAbsorber;
-  final String sizeOfFrame;
-  final String type;
-  final String typeMaleFemale;
-  final String typeOfFrame;
-  final String weight;
-  final String wheelSize;
-  final String brakes;
-  final String brand;
-  final String color;
+  final String name;
   final String description;
-  final String frontShockAbsorber;
-  final String model;
-  final String numberOfGrears;
 
-  const ProductDetailPage(
-      {Key? key,
-      required this.id,
-      required this.owner,
-      required this.picture,
-      required this.price,
-      required this.rearDereilleur,
-      required this.shockAbsorber,
-      required this.sizeOfFrame,
-      required this.type,
-      required this.typeMaleFemale,
-      required this.typeOfFrame,
-      required this.weight,
-      required this.wheelSize,
-      required this.brakes,
-      required this.brand,
-      required this.color,
-      required this.description,
-      required this.frontShockAbsorber,
-      required this.model,
-      required this.numberOfGrears})
-      : super(key: key);
+  const PartsDetailPage({
+    Key? key,
+    required this.id,
+    required this.owner,
+    required this.picture,
+    required this.price,
+    required this.name,
+    required this.description,
+    required this.brand,
+  }) : super(key: key);
 
   @override
-  ProductDetailPageState createState() => ProductDetailPageState();
+  PartsDetailPageState createState() => PartsDetailPageState();
 }
 
-class ProductDetailPageState extends State<ProductDetailPage>
+class PartsDetailPageState extends State<PartsDetailPage>
     with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
   late String sellerUser;
   List<dynamic> userFavorites = [];
   late bool isLiked;
-  late bool isCompere;
 
   final thisUser = FirebaseAuth.instance.currentUser!.displayName;
 
@@ -79,7 +51,6 @@ class ProductDetailPageState extends State<ProductDetailPage>
         CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
     getFavorite();
-    isCompere = compareFirstBike == widget.id || compareSecondBike == widget.id;
   }
 
   @override
@@ -117,18 +88,6 @@ class ProductDetailPageState extends State<ProductDetailPage>
     });
   }
 
-  // addStringToSF() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('stringValue', "abc");
-  // }
-
-  // getStringValuesSF() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   //Return String
-  //   String? stringValue = prefs.getString('stringValue');
-  //   return stringValue;
-  // }
-
   Widget _appBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -144,56 +103,15 @@ class ProductDetailPageState extends State<ProductDetailPage>
               Navigator.of(context).pop();
             },
           ),
-          _icon(
-            isCompere ? Icons.arrow_circle_down : Icons.compare_arrows,
-            color: Colors.white,
-            size: 30,
-            isOutLine: false,
-            onPressed: () {
-              if (!isCompere) {
-                if (compareFirstBike.isEmpty) {
-                  compareFirstBike = widget.id;
-                } else if (compareSecondBike.isEmpty) {
-                  compareSecondBike = widget.id;
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                        'Możesz porównywać maksymalnie dwa elementy na raz!'),
-                  ));
-                  return;
-                }
-              } else {
-                if (compareFirstBike == widget.id) {
-                  compareFirstBike = '';
-                } else if (compareSecondBike == widget.id) {
-                  compareSecondBike = '';
-                } else {}
-              }
-
-              print(compareFirstBike);
-              print(compareSecondBike);
-
-              setState(() {
-                isCompere = !isCompere;
-              });
-            },
-          ),
-          _icon(
-            isLiked ? Icons.favorite : Icons.favorite_border,
-            color: Colors.white,
-            size: 30,
-            isOutLine: false,
-            onPressed: () {
-              isLiked
-                  ? removeFromFavorites(widget.id)
-                  : addToFavorites(widget.id);
-              setState(
-                () {
-                  isLiked = !isLiked;
-                },
-              );
-            },
-          ),
+          _icon(isLiked ? Icons.favorite : Icons.favorite_border,
+              color: Colors.white, size: 30, isOutLine: false, onPressed: () {
+            isLiked
+                ? removeFromFavorites(widget.id)
+                : addToFavorites(widget.id);
+            setState(() {
+              isLiked = !isLiked;
+            });
+          }),
         ],
       ),
     );
@@ -210,23 +128,6 @@ class ProductDetailPageState extends State<ProductDetailPage>
     return SizedBox(
       height: 40,
       width: 40,
-      // padding: EdgeInsets.all(padding),
-      // margin: EdgeInsets.all(padding),
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //       color: const Color(0xffa8a09b),
-      //       style: isOutLine ? BorderStyle.solid : BorderStyle.none),
-      //   borderRadius: const BorderRadius.all(Radius.circular(13)),
-      //   color:
-      //       isOutLine ? Colors.transparent : AppStandardsColors.backgroundColor,
-      //   // boxShadow: const <BoxShadow>[
-      //   //   BoxShadow(
-      //   //       color: Color(0xfff8f8f8),
-      //   //       blurRadius: 5,
-      //   //       spreadRadius: 10,
-      //   //       offset: Offset(5, 5)),
-      //   // ],
-      // ),
       child: Icon(icon, color: color, size: size),
     ).ripple(() {
       if (onPressed != null) {
@@ -264,34 +165,6 @@ class ProductDetailPageState extends State<ProductDetailPage>
       ),
     );
   }
-
-  // Widget _thumbnail(String image) {
-  //   return AnimatedBuilder(
-  //     animation: animation,
-  //     //  builder: null,
-  //     builder: (context, child) => AnimatedOpacity(
-  //       opacity: animation.value,
-  //       duration: const Duration(milliseconds: 500),
-  //       child: child,
-  //     ),
-  //     child: Container(
-  //       margin: const EdgeInsets.symmetric(horizontal: 10),
-  //       child: Container(
-  //         height: 40,
-  //         width: 50,
-  //         decoration: BoxDecoration(
-  //           border: Border.all(
-  //             color: const Color(0xffE1E2E4),
-  //           ),
-  //           borderRadius: const BorderRadius.all(Radius.circular(13)),
-  //           // color: Theme.of(context).backgroundColor,
-  //         ),
-  //         child: Image.asset(image),
-  //       ).ripple(() {},
-  //           borderRadius: const BorderRadius.all(Radius.circular(13))),
-  //     ),
-  //   );
-  // }
 
   Widget _detailWidget() {
     return DraggableScrollableSheet(
@@ -338,7 +211,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
                             key: null,
                           ),
                           TitleText(
-                            text: widget.model,
+                            text: widget.name,
                             fontSize: 25,
                             key: null,
                           ),
@@ -364,17 +237,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(
                   height: 20,
                 ),
-                _description("Krótki opis", widget.description),
-                _description("Typ roweru", widget.type),
-                _description("Rodzaj i rozmiar ramy",
-                    "${widget.typeMaleFemale} ${widget.typeOfFrame} ${widget.sizeOfFrame}"),
-                _description("Waga", widget.weight),
-                _description("Rozmiar koła", widget.wheelSize),
-                _description("Przerzutki i ich liczba",
-                    "${widget.rearDereilleur} ${widget.numberOfGrears}"),
-                _description("Hamulce", widget.brakes),
-                _description("Amortyzatory przedni i tylni",
-                    "${widget.frontShockAbsorber} ${widget.shockAbsorber}"),
+                _description("Opis", widget.description),
               ],
             ),
           ),
@@ -402,7 +265,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
 
   FloatingActionButton _flotingButton() {
     return FloatingActionButton(
-      onPressed: onPressedFloatingActionButton,
+      onPressed: () {},
       backgroundColor: AppStandardsColors.backgroundColor,
       child: Icon(Icons.message,
           color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
@@ -443,25 +306,9 @@ class ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  void onPressedFloatingActionButton() async {
+  void onPressed() {
     String id = '${thisUser}_$sellerUser';
-    String id1 = '${sellerUser}_$thisUser';
-    final check =
-        await FirebaseFirestore.instance.collection('messages').doc(id).get();
-    final check1 =
-        await FirebaseFirestore.instance.collection('messages').doc(id1).get();
-    if (check.data() == null && check1.data() == null) {
-      FirebaseFirestore.instance.collection('messages').doc(id).set({
-        'user1': thisUser,
-        'user2': sellerUser,
-        'avatar1': await ThisUser().getFileData('', thisUser!),
-        'avatar2': await ThisUser().getFileData('', sellerUser),
-      });
-    } else if (check.data() != null) {
-      FirebaseFirestore.instance.collection('messages').doc(id).update({});
-    } else {
-      FirebaseFirestore.instance.collection('messages').doc(id1).update({});
-    }
+    FirebaseFirestore.instance.collection('messages').doc(id).set({});
 
     Navigator.push(
       context,

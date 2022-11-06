@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart%20';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chats_list_page.dart';
+import 'package:sklep_rowerowy/pages/comparison_page/comparison_page.dart';
 import 'package:sklep_rowerowy/pages/favorites_product/favortes_product.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in/google_sign_in.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in/login_page.dart';
@@ -11,6 +12,9 @@ import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../add_product/add_product_page.dart';
+import '../../add_product/choice_page.dart';
+
+import '../../parts_page/parts_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -18,6 +22,8 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+
+    print(user);
 
     return Drawer(
       child: ListView(
@@ -62,7 +68,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const ShoppingScene(),
+                  builder: (BuildContext context) => const PartsScene(),
                 ),
               );
             },
@@ -77,7 +83,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const AddProductPage(),
+                  builder: (BuildContext context) => const ChoicePage(),
                 ),
               );
             },
@@ -113,9 +119,9 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.bookmark),
+            leading: const Icon(Icons.favorite),
             title: const Text(
-              'Zapisane',
+              'Obserwowane',
               style: TextStyle(fontSize: 24.0),
             ),
             onTap: () {
@@ -137,7 +143,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const ShoppingScene(),
+                  builder: (BuildContext context) => const ComparisonPage(),
                 ),
               );
             },

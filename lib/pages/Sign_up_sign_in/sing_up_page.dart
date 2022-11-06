@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -185,16 +186,17 @@ class _SingUpPageState extends State<SingUpPage> {
                 ? const Opacity(
                     opacity: 0.25,
                     child: Image(
-                      image: AssetImage('images/avatar.png'),
+                      image: AssetImage('images/rower1.png'),
                     ),
                   )
                 : Opacity(
-                    opacity: 0.75,
-                    child: SizedBox(
-                      width: 100,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.file(imageFile!),
+                    opacity: 0.25,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(300),
+                      child: Image.file(
+                        imageFile!,
+                        height: 100,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
@@ -248,6 +250,16 @@ class _SingUpPageState extends State<SingUpPage> {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
 
+    if (imageFile == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Aby założyć konto musisz dodać avatar!'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -255,15 +267,30 @@ class _SingUpPageState extends State<SingUpPage> {
         child: CircularProgressIndicator(),
       ),
     );
+    String urlImage = await uploadFile();
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      var result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      var user = result.user!;
+      user.updatePhotoURL(urlImage);
+      user.updateDisplayName(usernameController.text);
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(usernameController.text)
+        .set({
+      'username': usernameController.text,
+      'email': emailController.text,
+      'image_url': urlImage,
+      'favorites': [],
+    });
+
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }

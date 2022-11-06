@@ -13,6 +13,9 @@ Future<void> main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
+String compareFirstBike = '';
+String compareSecondBike = '';
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 

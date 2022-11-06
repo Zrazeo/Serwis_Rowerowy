@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,48 +6,26 @@ import 'package:sklep_rowerowy/pages/product_details/product_details_page.dart';
 
 import 'package:sklep_rowerowy/style/colors.dart';
 
-class ShoppingCard extends StatelessWidget {
+import '../parts_details/patrts_details.dart';
+
+class PartsCard extends StatelessWidget {
   final String id;
   final String owner;
   final String picture;
   final String price;
-  final String rearDereilleur;
-  final String shockAbsorber;
-  final String sizeOfFrame;
-  final String type;
-  final String typeMaleFemale;
-  final String typeOfFrame;
-  final String weight;
-  final String wheelSize;
-  final String brakes;
   final String brand;
-  final String color;
+  final String name;
   final String description;
-  final String frontShockAbsorber;
-  final String model;
-  final String numberOfGrears;
 
-  const ShoppingCard({
+  const PartsCard({
     Key? key,
+    required this.name,
     required this.id,
-    required this.price,
-    required this.model,
-    required this.brand,
     required this.owner,
     required this.picture,
-    required this.type,
-    required this.rearDereilleur,
-    required this.shockAbsorber,
-    required this.sizeOfFrame,
-    required this.typeMaleFemale,
-    required this.typeOfFrame,
-    required this.weight,
-    required this.wheelSize,
-    required this.brakes,
-    required this.color,
+    required this.price,
+    required this.brand,
     required this.description,
-    required this.frontShockAbsorber,
-    required this.numberOfGrears,
   }) : super(key: key);
 
   @override
@@ -57,26 +36,14 @@ class ShoppingCard extends StatelessWidget {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => ProductDetailPage(
+              builder: (context) => PartsDetailPage(
                 id: id,
                 brand: brand,
-                brakes: brakes,
-                color: color,
                 description: description,
-                frontShockAbsorber: frontShockAbsorber,
-                model: model,
-                numberOfGrears: numberOfGrears,
+                name: name,
                 owner: owner,
                 picture: picture,
                 price: price,
-                rearDereilleur: rearDereilleur,
-                shockAbsorber: shockAbsorber,
-                sizeOfFrame: sizeOfFrame,
-                type: type,
-                typeMaleFemale: typeMaleFemale,
-                typeOfFrame: typeOfFrame,
-                weight: weight,
-                wheelSize: wheelSize,
               ),
             ),
           );
@@ -109,7 +76,7 @@ class ShoppingCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            model,
+                            name,
                             style: const TextStyle(
                               color: AppStandardsColors.textDarkColor,
                               fontWeight: FontWeight.bold,
@@ -128,7 +95,7 @@ class ShoppingCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            type,
+                            brand,
                             style: const TextStyle(
                               color: AppStandardsColors.textLightColor,
                               fontSize: 16,
@@ -164,6 +131,13 @@ class ShoppingCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                  IconButton(
+                    onPressed: (() async => await FirebaseFirestore.instance
+                        .collection('parts')
+                        .doc(id)
+                        .delete()),
+                    icon: const Icon(Icons.delete),
                   ),
                 ],
               ),
