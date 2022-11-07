@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sklep_rowerowy/pages/parts_page/parts_details_page.dart';
 
 import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'my_bikes_details.dart';
+import 'my_parts_details.dart';
 
 class MyBikesPage extends StatefulWidget {
   const MyBikesPage({Key? key}) : super(key: key);
@@ -110,7 +110,7 @@ class MyBikesPageState extends State<MyBikesPage> {
                             var doc = document.data() as Map;
                             String id = document.id;
                             if (doc['owner'] == thisUser) {
-                              return getPartsCard(
+                              return getMyPartsDetails(
                                 id,
                                 doc['name'],
                                 doc['brand'],
@@ -177,7 +177,7 @@ class MyBikesPageState extends State<MyBikesPage> {
     );
   }
 
-  Widget getPartsCard(
+  Widget getMyPartsDetails(
     String index,
     String name,
     String brand,
@@ -186,7 +186,7 @@ class MyBikesPageState extends State<MyBikesPage> {
     String picture,
     String owner,
   ) {
-    return PartsCard(
+    return MyPartsDetails(
       id: index,
       name: name,
       brand: brand,
