@@ -270,6 +270,12 @@ class _AddProductPageState extends State<AddProductPage> {
       height: size > 1 ? 76 * 2 : 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        keyboardType: name == 'Cena' ||
+                name == 'Liczba przerzutek' ||
+                name == 'Rozmiar kół' ||
+                name == 'Waga'
+            ? TextInputType.number
+            : TextInputType.text,
         validator: (value) => value != null ? null : 'Pole nie może być puste',
         controller: controller,
         cursorColor: Theme.of(context).backgroundColor,

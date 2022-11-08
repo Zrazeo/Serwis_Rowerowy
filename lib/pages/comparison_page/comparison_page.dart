@@ -14,8 +14,8 @@ class ComparisonPage extends StatefulWidget {
 }
 
 class ComparisonPageState extends State<ComparisonPage> {
-  late Map<String, dynamic> firstItemMap;
-  late Map<String, dynamic> secondItemMap;
+  Map<String, dynamic> firstItemMap = {};
+  Map<String, dynamic> secondItemMap = {};
 
   void getFirstItem() async {
     final firstItem = await FirebaseFirestore.instance
@@ -155,8 +155,8 @@ class ComparisonPageState extends State<ComparisonPage> {
                             DataRow(
                               cells: [
                                 const DataCell(Text("Przerzutki")),
-                                DataCell(Text(firstItemMap['rearDereilleur'])),
-                                DataCell(Text(secondItemMap['rearDereilleur'])),
+                                DataCell(Text(firstItemMap['rearDerailleur'])),
+                                DataCell(Text(secondItemMap['rearDerailleur'])),
                               ],
                             ),
                             DataRow(

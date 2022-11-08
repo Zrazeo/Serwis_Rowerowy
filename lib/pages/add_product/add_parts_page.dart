@@ -149,6 +149,8 @@ class _AddPartsPageState extends State<AddPartsPage> {
       height: 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        keyboardType:
+            name == 'Cena' ? TextInputType.number : TextInputType.text,
         validator: (value) => value != null ? null : 'Pole nie może być puste',
         controller: controller,
         cursorColor: Theme.of(context).backgroundColor,
