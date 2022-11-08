@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/shopping_card.dart';
+import 'package:sklep_rowerowy/widget/my_drawer.dart';
+import 'package:sklep_rowerowy/pages/bike_page/widgets/bike_card.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

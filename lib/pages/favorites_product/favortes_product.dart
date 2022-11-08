@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/shopping_card.dart';
+import 'package:sklep_rowerowy/pages/bike_page/widgets/bike_card.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 
 class FavoritesProduct extends StatefulWidget {

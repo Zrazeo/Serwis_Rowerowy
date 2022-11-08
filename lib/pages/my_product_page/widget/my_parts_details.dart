@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sklep_rowerowy/style/colors.dart';
 
-import '../parts_details/patrts_details.dart';
+import '../../parts_details_page/parts_details.dart';
 
-class PartsCard extends StatelessWidget {
+class MyPartsDetails extends StatelessWidget {
   final String id;
   final String owner;
   final String picture;
@@ -14,7 +15,7 @@ class PartsCard extends StatelessWidget {
   final String name;
   final String description;
 
-  const PartsCard({
+  const MyPartsDetails({
     Key? key,
     required this.name,
     required this.id,
@@ -127,6 +128,13 @@ class PartsCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                  IconButton(
+                    onPressed: (() async => await FirebaseFirestore.instance
+                        .collection('parts')
+                        .doc(id)
+                        .delete()),
+                    icon: const Icon(Icons.delete),
                   ),
                 ],
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../style/colors.dart';
 import 'add_parts_page.dart';
-import 'add_product_page.dart';
+import 'add_bike_page.dart';
 
 class ChoicePage extends StatelessWidget {
   const ChoicePage({super.key});

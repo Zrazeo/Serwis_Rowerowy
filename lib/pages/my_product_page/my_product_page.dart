@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
+import 'package:sklep_rowerowy/widget/my_drawer.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'my_bikes_details.dart';
-import 'my_parts_details.dart';
+import 'widget/my_bikes_details.dart';
+import 'widget/my_parts_details.dart';
 
 class MyBikesPage extends StatefulWidget {
   const MyBikesPage({Key? key}) : super(key: key);
@@ -38,7 +38,6 @@ class MyBikesPageState extends State<MyBikesPage> {
             Tab(text: 'Części'),
           ]),
         ),
-        drawer: const MyDrawer(),
         body: TabBarView(
           children: [
             Container(

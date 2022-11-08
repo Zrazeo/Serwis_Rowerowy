@@ -2,7 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart%20';
 import 'package:flutter/material.dart';
 import 'package:sklep_rowerowy/main.dart';
-import 'package:sklep_rowerowy/pages/Sign_up_sign_in/utils.dart';
+import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/utils.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});

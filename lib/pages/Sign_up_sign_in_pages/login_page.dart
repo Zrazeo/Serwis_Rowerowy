@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sklep_rowerowy/pages/Sign_up_sign_in/google_sign_in.dart';
+import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart ';
-import 'package:sklep_rowerowy/pages/Sign_up_sign_in/utils.dart';
+import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/utils.dart';
 
 import '../../main.dart';
 import 'forgot_password_page.dart';

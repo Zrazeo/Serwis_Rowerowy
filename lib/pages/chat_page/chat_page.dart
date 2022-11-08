@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sklep_rowerowy/pages/chat_page/widget/message_bubble.dart';
 import 'package:sklep_rowerowy/pages/chat_page/widget/new_message.dart';
-import 'package:sklep_rowerowy/this_user.dart';
+import 'package:sklep_rowerowy/widget/this_user.dart';
 
 import '../../style/colors.dart';
 

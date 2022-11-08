@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:sklep_rowerowy/pages/shopping_page/widgets/my_drawer.dart';
+import 'package:sklep_rowerowy/widget/my_drawer.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'parts_details_page.dart';
+import 'widget/parts_card.dart';
 
 class PartsScene extends StatefulWidget {
   const PartsScene({Key? key}) : super(key: key);

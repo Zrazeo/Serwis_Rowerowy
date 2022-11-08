@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sklep_rowerowy/main.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chat_page.dart';
-import 'package:sklep_rowerowy/this_user.dart';
+import 'package:sklep_rowerowy/widget/this_user.dart';
 
 import '../../style/colors.dart';
 
