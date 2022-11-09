@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chat_page.dart';
 
 import '../../style/colors.dart';
+import '../../widget/this_user.dart';
 
 class PartsDetailPage extends StatefulWidget {
   final String id;
@@ -103,15 +104,6 @@ class PartsDetailPageState extends State<PartsDetailPage>
               Navigator.of(context).pop();
             },
           ),
-          _icon(isLiked ? Icons.favorite : Icons.favorite_border,
-              color: Colors.white, size: 30, isOutLine: false, onPressed: () {
-            isLiked
-                ? removeFromFavorites(widget.id)
-                : addToFavorites(widget.id);
-            setState(() {
-              isLiked = !isLiked;
-            });
-          }),
         ],
       ),
     );
@@ -258,7 +250,7 @@ class PartsDetailPageState extends State<PartsDetailPage>
 
   FloatingActionButton _flotingButton() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: onPressedFloatingActionButton,
       backgroundColor: AppStandardsColors.backgroundColor,
       child: Icon(Icons.message,
           color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
@@ -299,10 +291,27 @@ class PartsDetailPageState extends State<PartsDetailPage>
     );
   }
 
-  void onPressed() {
+  void onPressedFloatingActionButton() async {
     String id = '${thisUser}_$sellerUser';
-    FirebaseFirestore.instance.collection('messages').doc(id).set({});
+    String id1 = '${sellerUser}_$thisUser';
+    final check =
+        await FirebaseFirestore.instance.collection('messages').doc(id).get();
+    final check1 =
+        await FirebaseFirestore.instance.collection('messages').doc(id1).get();
+    if (check.data() == null && check1.data() == null) {
+      FirebaseFirestore.instance.collection('messages').doc(id).set({
+        'user1': thisUser,
+        'user2': sellerUser,
+        'avatar1': await ThisUser().getFileData('', thisUser!),
+        'avatar2': await ThisUser().getFileData('', sellerUser),
+      });
+    } else if (check.data() != null) {
+      FirebaseFirestore.instance.collection('messages').doc(id).update({});
+    } else {
+      FirebaseFirestore.instance.collection('messages').doc(id1).update({});
+    }
 
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute<void>(
