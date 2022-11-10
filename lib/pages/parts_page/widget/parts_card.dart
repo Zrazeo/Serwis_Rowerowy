@@ -91,13 +91,6 @@ class PartsCard extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          Text(
-                            brand,
-                            style: const TextStyle(
-                              color: AppStandardsColors.textLightColor,
-                              fontSize: 16,
-                            ),
-                          ),
                           const SizedBox(
                             height: 5,
                           ),

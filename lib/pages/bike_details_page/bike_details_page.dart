@@ -296,12 +296,12 @@ class ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(
                   height: 20,
                 ),
-                _description("Krótki opis", widget.description),
+                _description("Opis", widget.description),
                 _description("Typ roweru", widget.type),
                 _description("Rodzaj i rozmiar ramy",
                     "${widget.typeMaleFemale} ${widget.typeOfFrame} ${widget.sizeOfFrame}"),
-                _description("Waga", widget.weight),
-                _description("Rozmiar koła", widget.wheelSize),
+                _description("Waga", widget.weight, helpText: 'kg'),
+                _description("Rozmiar koła", widget.wheelSize, helpText: '″'),
                 _description("Przerzutki i ich liczba",
                     "${widget.rearDereilleur} ${widget.numberOfGrears}"),
                 _description("Hamulce", widget.brakes),
@@ -315,7 +315,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _description(String text, String asset) {
+  Widget _description(String text, String asset, {String helpText = ''}) {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -326,7 +326,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
             fontSize: 14,
           ),
           const SizedBox(height: 10),
-          Text(asset),
+          Text('$asset $helpText'),
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'dart:async';
+// import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -146,14 +146,15 @@ class ComparisonPageState extends State<ComparisonPage> {
                                   ),
                                   DataRow(
                                     cells: [
-                                      const DataCell(Text("Waga")),
+                                      const DataCell(Text("Waga (w kg)")),
                                       DataCell(Text(firstItemMap['weight'])),
                                       DataCell(Text(secondItemMap['weight'])),
                                     ],
                                   ),
                                   DataRow(
                                     cells: [
-                                      const DataCell(Text("Rozmiar kół")),
+                                      const DataCell(
+                                          Text("Rozmiar kół (w calach)")),
                                       DataCell(Text(firstItemMap['wheelSize'])),
                                       DataCell(
                                           Text(secondItemMap['wheelSize'])),

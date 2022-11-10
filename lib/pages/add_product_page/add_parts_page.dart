@@ -51,10 +51,10 @@ class _AddPartsPageState extends State<AddPartsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bikeTextField(context, brand, 'Marka'),
-                bikeTextField(context, name, 'Nazwa'),
-                bikeTextField(context, price, 'Cena'),
-                bikeTextField(context, description, 'Opis'),
+                partTextField(context, brand, 'Marka'),
+                partTextField(context, name, 'Nazwa'),
+                partTextField(context, price, 'Cena'),
+                partTextField(context, description, 'Opis', size: 5),
                 if (downloadURL != null)
                   Center(
                     child: Container(
@@ -142,11 +142,11 @@ class _AddPartsPageState extends State<AddPartsPage> {
     );
   }
 
-  Widget bikeTextField(
+  Widget partTextField(
       BuildContext context, TextEditingController controller, String name,
       {int size = 1}) {
     return Container(
-      height: 76,
+      height: size > 1 ? 76 * 2 : 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         keyboardType:
