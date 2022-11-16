@@ -40,7 +40,13 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future logout() async {
-    await googleSingIn.disconnect();
+    try {
+      await googleSingIn.disconnect();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
     FirebaseAuth.instance.signOut();
+    notifyListeners();
   }
 }

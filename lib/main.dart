@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/google_sign_in.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/navigator_login.dart';
@@ -8,7 +9,7 @@ import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/utils.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(Phoenix(child: const MyApp()));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();

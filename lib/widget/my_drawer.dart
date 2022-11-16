@@ -10,6 +10,7 @@ import 'package:sklep_rowerowy/style/colors.dart';
 import '../pages/add_product_page/choice_page.dart';
 
 import '../pages/parts_page/parts_page.dart';
+import '../pages/settings_page/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -142,12 +143,17 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout_outlined),
+            leading: const Icon(Icons.settings),
             title: const Text(
-              'Wyloguj',
+              'Ustawienia',
               style: TextStyle(fontSize: 24.0),
             ),
-            onTap: () => FirebaseAuth.instance.signOut(),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const SettingsPage(),
+              ),
+            ),
           ),
         ],
       ),
