@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sklep_rowerowy/pages/mode_pages/mode_parts_page.dart';
 
 import 'package:sklep_rowerowy/style/colors.dart';
 
@@ -129,12 +130,34 @@ class MyPartsDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: (() async => await FirebaseFirestore.instance
-                        .collection('parts')
-                        .doc(id)
-                        .delete()),
-                    icon: const Icon(Icons.delete),
+                  Column(
+                    children: [
+                      IconButton(
+                        onPressed: (() async => await FirebaseFirestore.instance
+                            .collection('parts')
+                            .doc(id)
+                            .delete()),
+                        icon: const Icon(Icons.delete),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          Map<String, dynamic> data = await getData();
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => ModePartsPage(
+                                id: id,
+                                partData: data,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.mode,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -142,4 +165,10 @@ class MyPartsDetails extends StatelessWidget {
           ],
         ),
       );
+
+  Future<Map<String, dynamic>> getData() async {
+    var data =
+        await FirebaseFirestore.instance.collection('parts').doc(id).get();
+    return data.data() as Map<String, dynamic>;
+  }
 }

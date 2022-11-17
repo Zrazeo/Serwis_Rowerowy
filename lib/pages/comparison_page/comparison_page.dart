@@ -61,138 +61,185 @@ class ComparisonPageState extends State<ComparisonPage> {
         backgroundColor: AppStandardsColors.backgroundColor,
         elevation: 0,
       ),
-      body: firstItemMap['picture'] == null
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: compareFirstBike == '' || compareSecondBike == ''
-                  ? const Center(
-                      child: Text(
-                        'Dodaj dwa rowery do porównania!',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    )
-                  : ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Column(
-                          children: <Widget>[
-                            Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 100,
-                                    width: 120,
-                                    child: Image.network(
-                                      firstItemMap['picture'],
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                  const Padding(
-                                      padding: EdgeInsets.only(right: 20)),
-                                  SizedBox(
-                                    height: 100,
-                                    width: 120,
-                                    child: Image.network(
-                                      secondItemMap['picture'],
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: compareFirstBike == '' || compareSecondBike == ''
+            ? const Center(
+                child: Text(
+                  'Dodaj dwa rowery do porównania!',
+                  style: TextStyle(fontSize: 20),
+                ),
+              )
+            : firstItemMap['picture'] == null
+                ? const Center(child: CircularProgressIndicator())
+                : ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const SizedBox(
+                                width: 120,
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 15.0, right: 15),
-                              child: DataTable(
-                                columns: const [
-                                  DataColumn(
-                                    label: Text(''),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Rower 1'),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Rower 2'),
-                                  ),
-                                ],
-                                rows: [
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Marka")),
-                                      DataCell(Text(firstItemMap['brand'])),
-                                      DataCell(Text(secondItemMap['brand'])),
-                                    ],
-                                  ),
-                                  DataRow(cells: [
+                              SizedBox(
+                                height: 100,
+                                width: 120,
+                                child: Image.network(
+                                  firstItemMap['picture'],
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(right: 60)),
+                              SizedBox(
+                                height: 100,
+                                width: 120,
+                                child: Image.network(
+                                  secondItemMap['picture'],
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 15.0, right: 15),
+                            child: DataTable(
+                              columns: const [
+                                DataColumn(
+                                  label: Text(''),
+                                ),
+                                DataColumn(
+                                  label: Text('Rower 1'),
+                                ),
+                                DataColumn(
+                                  label: Text('Rower 2'),
+                                ),
+                              ],
+                              rows: [
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['brand'] ==
+                                              secondItemMap['brand']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Marka")),
+                                    DataCell(Text(firstItemMap['brand'])),
+                                    DataCell(Text(secondItemMap['brand'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['model'] ==
+                                              secondItemMap['model']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
                                     const DataCell(Text("Model")),
                                     DataCell(Text(firstItemMap['model'])),
                                     DataCell(Text(secondItemMap['model'])),
-                                  ]),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Cena")),
-                                      DataCell(Text(firstItemMap['price'])),
-                                      DataCell(Text(secondItemMap['price'])),
-                                    ],
-                                  ),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Typ roweru")),
-                                      DataCell(Text(firstItemMap['type'])),
-                                      DataCell(Text(secondItemMap['type'])),
-                                    ],
-                                  ),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Waga (w kg)")),
-                                      DataCell(Text(firstItemMap['weight'])),
-                                      DataCell(Text(secondItemMap['weight'])),
-                                    ],
-                                  ),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(
-                                          Text("Rozmiar kół (w calach)")),
-                                      DataCell(Text(firstItemMap['wheelSize'])),
-                                      DataCell(
-                                          Text(secondItemMap['wheelSize'])),
-                                    ],
-                                  ),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Przerzutki")),
-                                      DataCell(
-                                          Text(firstItemMap['rearDerailleur'])),
-                                      DataCell(Text(
-                                          secondItemMap['rearDerailleur'])),
-                                    ],
-                                  ),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Hamulce")),
-                                      DataCell(Text(firstItemMap['brakes'])),
-                                      DataCell(Text(secondItemMap['brakes'])),
-                                    ],
-                                  ),
-                                  DataRow(
-                                    cells: [
-                                      const DataCell(Text("Amortyzatory")),
-                                      DataCell(
-                                          Text(firstItemMap['shockAbsorber'])),
-                                      DataCell(
-                                          Text(secondItemMap['shockAbsorber'])),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['price'] ==
+                                              secondItemMap['price']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Cena")),
+                                    DataCell(Text(firstItemMap['price'])),
+                                    DataCell(Text(secondItemMap['price'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['type'] ==
+                                              secondItemMap['type']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Typ roweru")),
+                                    DataCell(Text(firstItemMap['type'])),
+                                    DataCell(Text(secondItemMap['type'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['weight'] ==
+                                              secondItemMap['weight']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Waga (w kg)")),
+                                    DataCell(Text(firstItemMap['weight'])),
+                                    DataCell(Text(secondItemMap['weight'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['wheelSize'] ==
+                                              secondItemMap['wheelSize']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(
+                                        Text("Rozmiar kół (w calach)")),
+                                    DataCell(Text(firstItemMap['wheelSize'])),
+                                    DataCell(Text(secondItemMap['wheelSize'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['rearDerailleur'] ==
+                                              secondItemMap['rearDerailleur']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Przerzutki")),
+                                    DataCell(
+                                        Text(firstItemMap['rearDerailleur'])),
+                                    DataCell(
+                                        Text(secondItemMap['rearDerailleur'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['brakes'] ==
+                                              secondItemMap['brakes']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Hamulce")),
+                                    DataCell(Text(firstItemMap['brakes'])),
+                                    DataCell(Text(secondItemMap['brakes'])),
+                                  ],
+                                ),
+                                DataRow(
+                                  color: MaterialStateProperty.all(
+                                      firstItemMap['shockAbsorber'] ==
+                                              secondItemMap['shockAbsorber']
+                                          ? Colors.white
+                                          : Colors.blue[200]),
+                                  cells: [
+                                    const DataCell(Text("Amortyzatory")),
+                                    DataCell(
+                                        Text(firstItemMap['shockAbsorber'])),
+                                    DataCell(
+                                        Text(secondItemMap['shockAbsorber'])),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+      ),
     );
   }
 }

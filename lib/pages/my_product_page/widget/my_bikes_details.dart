@@ -7,6 +7,8 @@ import 'package:sklep_rowerowy/pages/bike_details_page/bike_details_page.dart';
 
 import 'package:sklep_rowerowy/style/colors.dart';
 
+import '../../mode_pages/mode_bikes_page.dart';
+
 class MyBikesDetails extends StatelessWidget {
   final String id;
   final String owner;
@@ -166,12 +168,34 @@ class MyBikesDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: (() async => await FirebaseFirestore.instance
-                        .collection('bike')
-                        .doc(id)
-                        .delete()),
-                    icon: const Icon(Icons.delete),
+                  Column(
+                    children: [
+                      IconButton(
+                        onPressed: (() async => await FirebaseFirestore.instance
+                            .collection('bike')
+                            .doc(id)
+                            .delete()),
+                        icon: const Icon(Icons.delete),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          Map<String, dynamic> data = await getData();
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => ModeBikesPage(
+                                id: id,
+                                partData: data,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.mode,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -179,4 +203,9 @@ class MyBikesDetails extends StatelessWidget {
           ],
         ),
       );
+  Future<Map<String, dynamic>> getData() async {
+    var data =
+        await FirebaseFirestore.instance.collection('bike').doc(id).get();
+    return data.data() as Map<String, dynamic>;
+  }
 }
