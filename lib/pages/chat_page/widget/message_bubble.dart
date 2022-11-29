@@ -66,7 +66,11 @@ class MessageBubble extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width * 0.8,
               ),
               decoration: BoxDecoration(
-                color: isMe ? Theme.of(context).primaryColor : Colors.grey[350],
+                color: isImage()
+                    ? null
+                    : isMe
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey[350],
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(12),
                   topRight: const Radius.circular(12),
@@ -78,10 +82,12 @@ class MessageBubble extends StatelessWidget {
                       : const Radius.circular(12),
                 ),
               ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 16,
-              ),
+              padding: isImage()
+                  ? null
+                  : const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 16,
+                    ),
               margin: const EdgeInsets.symmetric(
                 vertical: 5,
                 horizontal: 8,
@@ -90,13 +96,47 @@ class MessageBubble extends StatelessWidget {
                 crossAxisAlignment:
                     isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    message,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: isMe ? Colors.white : Colors.black,
-                    ),
-                  ),
+                  isImage()
+                      ? GestureDetector(
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Material(
+                                  type: MaterialType.transparency,
+                                  child: Center(
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                        maxHeight:
+                                            MediaQuery.of(context).size.height *
+                                                0.7,
+                                      ),
+                                      child: Image.network(
+                                        message,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              maxWidth: 200,
+                              maxHeight: 200,
+                            ),
+                            child: Image.network(
+                              message,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          message,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: isMe ? Colors.white : Colors.black,
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -104,5 +144,17 @@ class MessageBubble extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool isImage() {
+    if (message.length < 76) {
+      return false;
+    } else {
+      if (message.substring(0, 77) ==
+          'https://firebasestorage.googleapis.com/v0/b/serwis-rowerowy-17a8b.appspot.com') {
+        return true;
+      }
+    }
+    return false;
   }
 }

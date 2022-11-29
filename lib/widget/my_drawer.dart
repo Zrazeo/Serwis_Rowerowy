@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart%20';
 import 'package:flutter/material.dart';
+
+import 'package:sklep_rowerowy/pages/bike_page/bike_page.dart';
 import 'package:sklep_rowerowy/pages/chat_page/chats_list_page.dart';
 import 'package:sklep_rowerowy/pages/comparison_page/comparison_page.dart';
 import 'package:sklep_rowerowy/pages/favorites_product/favortes_product.dart';
 import 'package:sklep_rowerowy/pages/my_product_page/my_product_page.dart';
-import 'package:sklep_rowerowy/pages/bike_page/bike_page.dart';
 import 'package:sklep_rowerowy/style/colors.dart';
 
 import '../pages/add_product_page/choice_page.dart';
-
 import '../pages/parts_page/parts_page.dart';
 import '../pages/settings_page/settings_page.dart';
 
