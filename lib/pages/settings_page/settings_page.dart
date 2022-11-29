@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -216,7 +218,6 @@ class _SettingsPageState extends State<SettingsPage> {
         email: SettingsPage.emailController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      // ignore: avoid_print
       print(e);
       Utils.showSnackBar(e.message);
     }

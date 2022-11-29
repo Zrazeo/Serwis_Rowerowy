@@ -96,12 +96,12 @@ class _SingUpPageState extends State<SingUpPage> {
                   controller: usernameController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Nazwa uzytkownika',
+                    labelText: 'Nazwa użytkownika',
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (username) =>
                       username != null && username.length < 4
-                          ? 'Wprowadz nazwe uzytkownika'
+                          ? 'Wprowadz nazwę użytkownika'
                           : null,
                 ),
               ),
@@ -116,7 +116,7 @@ class _SingUpPageState extends State<SingUpPage> {
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value != null && value.length < 6
-                      ? 'Wprowadz minimum 6 znaków'
+                      ? 'Wprowadź minimum 6 znaków'
                       : null,
                 ),
               ),
@@ -129,7 +129,7 @@ class _SingUpPageState extends State<SingUpPage> {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                   onPressed: nativSignUp,
-                  child: const Text('Zarejetruj'),
+                  child: const Text('Zarejestruj'),
                 ),
               ),
               Row(

@@ -248,7 +248,7 @@ class PartsDetailPageState extends State<PartsDetailPage>
     );
   }
 
-  FloatingActionButton _flotingButton() {
+  FloatingActionButton _floatingButton() {
     return FloatingActionButton(
       onPressed: onPressedFloatingActionButton,
       backgroundColor: AppStandardsColors.backgroundColor,
@@ -262,7 +262,7 @@ class PartsDetailPageState extends State<PartsDetailPage>
     isLiked = userFavorites.contains(widget.id); //true;
 
     return Scaffold(
-      floatingActionButton: _flotingButton(),
+      floatingActionButton: _floatingButton(),
       backgroundColor: AppStandardsColors.backgroundColor,
       body: SafeArea(
         child: Container(

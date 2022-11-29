@@ -14,7 +14,7 @@ class MyBikesDetails extends StatelessWidget {
   final String owner;
   final String picture;
   final String price;
-  final String rearDereilleur;
+  final String rearDerailleur;
   final String shockAbsorber;
   final String sizeOfFrame;
   final String type;
@@ -28,7 +28,7 @@ class MyBikesDetails extends StatelessWidget {
   final String description;
   final String frontShockAbsorber;
   final String model;
-  final String numberOfGrears;
+  final String numberOfGears;
 
   const MyBikesDetails({
     Key? key,
@@ -39,7 +39,7 @@ class MyBikesDetails extends StatelessWidget {
     required this.owner,
     required this.picture,
     required this.type,
-    required this.rearDereilleur,
+    required this.rearDerailleur,
     required this.shockAbsorber,
     required this.sizeOfFrame,
     required this.typeMaleFemale,
@@ -50,7 +50,7 @@ class MyBikesDetails extends StatelessWidget {
     required this.color,
     required this.description,
     required this.frontShockAbsorber,
-    required this.numberOfGrears,
+    required this.numberOfGears,
   }) : super(key: key);
 
   @override
@@ -69,11 +69,11 @@ class MyBikesDetails extends StatelessWidget {
                 description: description,
                 frontShockAbsorber: frontShockAbsorber,
                 model: model,
-                numberOfGrears: numberOfGrears,
+                numberOfGears: numberOfGears,
                 owner: owner,
                 picture: picture,
                 price: price,
-                rearDereilleur: rearDereilleur,
+                rearDerailleur: rearDerailleur,
                 shockAbsorber: shockAbsorber,
                 sizeOfFrame: sizeOfFrame,
                 type: type,
@@ -225,6 +225,7 @@ class MyBikesDetails extends StatelessWidget {
                         .collection('bike')
                         .doc(id)
                         .delete();
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   },
                   child: const Text('Usuń'),

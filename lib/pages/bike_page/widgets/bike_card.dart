@@ -10,7 +10,7 @@ class ShoppingCard extends StatelessWidget {
   final String owner;
   final String picture;
   final String price;
-  final String rearDereilleur;
+  final String rearDerailleur;
   final String shockAbsorber;
   final String sizeOfFrame;
   final String type;
@@ -24,7 +24,7 @@ class ShoppingCard extends StatelessWidget {
   final String description;
   final String frontShockAbsorber;
   final String model;
-  final String numberOfGrears;
+  final String numberOfGears;
 
   const ShoppingCard({
     Key? key,
@@ -35,7 +35,7 @@ class ShoppingCard extends StatelessWidget {
     required this.owner,
     required this.picture,
     required this.type,
-    required this.rearDereilleur,
+    required this.rearDerailleur,
     required this.shockAbsorber,
     required this.sizeOfFrame,
     required this.typeMaleFemale,
@@ -46,7 +46,7 @@ class ShoppingCard extends StatelessWidget {
     required this.color,
     required this.description,
     required this.frontShockAbsorber,
-    required this.numberOfGrears,
+    required this.numberOfGears,
   }) : super(key: key);
 
   @override
@@ -65,11 +65,11 @@ class ShoppingCard extends StatelessWidget {
                 description: description,
                 frontShockAbsorber: frontShockAbsorber,
                 model: model,
-                numberOfGrears: numberOfGrears,
+                numberOfGears: numberOfGears,
                 owner: owner,
                 picture: picture,
                 price: price,
-                rearDereilleur: rearDereilleur,
+                rearDerailleur: rearDerailleur,
                 shockAbsorber: shockAbsorber,
                 sizeOfFrame: sizeOfFrame,
                 type: type,

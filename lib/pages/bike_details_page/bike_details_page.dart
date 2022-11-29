@@ -14,7 +14,7 @@ class ProductDetailPage extends StatefulWidget {
   final String owner;
   final String picture;
   final String price;
-  final String rearDereilleur;
+  final String rearDerailleur;
   final String shockAbsorber;
   final String sizeOfFrame;
   final String type;
@@ -28,7 +28,7 @@ class ProductDetailPage extends StatefulWidget {
   final String description;
   final String frontShockAbsorber;
   final String model;
-  final String numberOfGrears;
+  final String numberOfGears;
 
   const ProductDetailPage(
       {Key? key,
@@ -36,7 +36,7 @@ class ProductDetailPage extends StatefulWidget {
       required this.owner,
       required this.picture,
       required this.price,
-      required this.rearDereilleur,
+      required this.rearDerailleur,
       required this.shockAbsorber,
       required this.sizeOfFrame,
       required this.type,
@@ -50,7 +50,7 @@ class ProductDetailPage extends StatefulWidget {
       required this.description,
       required this.frontShockAbsorber,
       required this.model,
-      required this.numberOfGrears})
+      required this.numberOfGears})
       : super(key: key);
 
   @override
@@ -303,7 +303,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
                 _description("Waga", widget.weight, helpText: 'kg'),
                 _description("Rozmiar koła", widget.wheelSize, helpText: '″'),
                 _description("Przerzutki i ich liczba",
-                    "${widget.rearDereilleur} ${widget.numberOfGrears}"),
+                    "${widget.rearDerailleur} ${widget.numberOfGears}"),
                 _description("Hamulce", widget.brakes),
                 _description("Amortyzatory przedni i tylni",
                     "${widget.frontShockAbsorber} ${widget.shockAbsorber}"),
@@ -332,7 +332,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  FloatingActionButton _flotingButton() {
+  FloatingActionButton _floatingButton() {
     return FloatingActionButton(
       onPressed: onPressedFloatingActionButton,
       backgroundColor: AppStandardsColors.backgroundColor,
@@ -346,7 +346,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
     isLiked = userFavorites.contains(widget.id); //true;
 
     return Scaffold(
-      floatingActionButton: _flotingButton(),
+      floatingActionButton: _floatingButton(),
       backgroundColor: AppStandardsColors.backgroundColor,
       body: SafeArea(
         child: Container(

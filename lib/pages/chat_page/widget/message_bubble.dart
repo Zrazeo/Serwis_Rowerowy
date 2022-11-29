@@ -28,7 +28,7 @@ class MessageBubble extends StatelessWidget {
 
     var visibleMessageDate = false;
 
-    // wyswietla date nad wiadomoscia tylko gdy poprzednia byla ponad 15 min wczesniej
+    // wyświetla date nad wiadomością tylko gdy poprzednia była ponad 15 min wcześniej
     if (time.isAfter(previousTime.add(const Duration(minutes: 15)))) {
       visibleMessageDate = true;
     }
