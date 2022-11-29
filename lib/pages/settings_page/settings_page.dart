@@ -126,6 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   _getFromGallery() async {
+    // ignore: deprecated_member_use
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxHeight: 300,

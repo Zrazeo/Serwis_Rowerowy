@@ -158,7 +158,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     changeSizeOfFrame,
                     'Rozmiar ramy'),
                 dropdownButtonFormField(
-                    ['Damski', 'Męski'],
+                    ['Damski', 'Męski', 'Unisex'],
                     dropdownValueTypeMaleFemale,
                     changeTypeMaleFemale,
                     'Rodzaj damski/męski'),

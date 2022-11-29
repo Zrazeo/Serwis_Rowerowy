@@ -182,7 +182,7 @@ class _ModeBikesPageState extends State<ModeBikesPage> {
                     changeSizeOfFrame,
                     'Rozmiar ramy'),
                 dropdownButtonFormField(
-                    ['Damski', 'Męski'],
+                    ['Damski', 'Męski', 'Unisex'],
                     dropdownValueTypeMaleFemale,
                     changeTypeMaleFemale,
                     'Rodzaj damski/męski'),
