@@ -133,10 +133,7 @@ class MyPartsDetails extends StatelessWidget {
                   Column(
                     children: [
                       IconButton(
-                        onPressed: (() async => await FirebaseFirestore.instance
-                            .collection('parts')
-                            .doc(id)
-                            .delete()),
+                        onPressed: () => showDeleteDialog(context),
                         icon: const Icon(Icons.delete),
                       ),
                       IconButton(
@@ -171,4 +168,34 @@ class MyPartsDetails extends StatelessWidget {
         await FirebaseFirestore.instance.collection('parts').doc(id).get();
     return data.data() as Map<String, dynamic>;
   }
+
+  void showDeleteDialog(BuildContext context) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Expanded(
+            child: AlertDialog(
+              content: const Text('Czy na pewno chcesz usunąć to ogłoszenie?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Anuluj'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    await FirebaseFirestore.instance
+                        .collection('parts')
+                        .doc(id)
+                        .delete();
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Usuń'),
+                ),
+              ],
+            ),
+          );
+        },
+      );
 }
