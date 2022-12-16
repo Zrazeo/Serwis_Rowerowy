@@ -8,6 +8,7 @@ To install this app, follow these steps:
 
 1. Download the latest version from github
 2. Launch the app on VSCode / Android Studio
+
 $ flutter run lib/main.dart
 
 ## System requirements
