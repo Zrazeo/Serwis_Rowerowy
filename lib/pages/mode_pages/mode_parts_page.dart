@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -84,10 +84,8 @@ class _ModePartsPageState extends State<ModePartsPage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppStandardsColors.backgroundColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
-                          textStyle: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
+                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                       onPressed: () async {
                         // ignore: deprecated_member_use
                         PickedFile? pickedFile = await ImagePicker().getImage(
@@ -103,16 +101,12 @@ class _ModePartsPageState extends State<ModePartsPage> {
 
                         FirebaseStorage storage = FirebaseStorage.instance;
                         try {
-                          await storage
-                              .ref('parts/${widget.id}')
-                              .putFile(imageFile!);
+                          await storage.ref('parts/${widget.id}').putFile(imageFile!);
                         } on FirebaseStorage catch (e) {
                           // ignore: avoid_print
                           print(e);
                         }
-                        String url = await storage
-                            .ref('parts/${widget.id}')
-                            .getDownloadURL();
+                        String url = await storage.ref('parts/${widget.id}').getDownloadURL();
                         setState(() {
                           downloadURL = url;
                         });
@@ -141,10 +135,7 @@ class _ModePartsPageState extends State<ModePartsPage> {
           if (!isValid) return;
 
           if (downloadURL == null) {
-            FirebaseFirestore.instance
-                .collection('parts')
-                .doc(widget.id)
-                .update({
+            FirebaseFirestore.instance.collection('parts').doc(widget.id).update({
               'brand': brand.text,
               'name': name.text,
               'price': price.text,
@@ -152,10 +143,7 @@ class _ModePartsPageState extends State<ModePartsPage> {
               'owner': user!.displayName,
             });
           } else {
-            FirebaseFirestore.instance
-                .collection('parts')
-                .doc(widget.id)
-                .update({
+            FirebaseFirestore.instance.collection('parts').doc(widget.id).update({
               'brand': brand.text,
               'name': name.text,
               'price': price.text,
@@ -171,15 +159,12 @@ class _ModePartsPageState extends State<ModePartsPage> {
     );
   }
 
-  Widget partTextField(
-      BuildContext context, TextEditingController controller, String name,
-      {int size = 1}) {
+  Widget partTextField(BuildContext context, TextEditingController controller, String name, {int size = 1}) {
     return Container(
       height: size > 1 ? 76 * 2 : 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        keyboardType:
-            name == 'Cena' ? TextInputType.number : TextInputType.text,
+        keyboardType: name == 'Cena' ? TextInputType.number : TextInputType.text,
         validator: (value) => value != null ? null : 'Pole nie może być puste',
         controller: controller,
         cursorColor: Theme.of(context).backgroundColor,

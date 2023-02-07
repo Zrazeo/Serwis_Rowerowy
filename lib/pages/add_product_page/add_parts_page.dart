@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -75,10 +75,8 @@ class _AddPartsPageState extends State<AddPartsPage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppStandardsColors.backgroundColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
-                          textStyle: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
+                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                       onPressed: () async {
                         // ignore: deprecated_member_use
                         PickedFile? pickedFile = await ImagePicker().getImage(
@@ -99,8 +97,7 @@ class _AddPartsPageState extends State<AddPartsPage> {
                           // ignore: avoid_print
                           print(e);
                         }
-                        String url =
-                            await storage.ref('parts/$uid').getDownloadURL();
+                        String url = await storage.ref('parts/$uid').getDownloadURL();
                         setState(() {
                           downloadURL = url;
                         });
@@ -124,6 +121,11 @@ class _AddPartsPageState extends State<AddPartsPage> {
               content: Text('Musisz dodać zdjęcie części do ogłoszenia!'),
             ));
             return;
+          } else if (brand.text.isEmpty || name.text.isEmpty || price.text.isEmpty || description.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Musisz wpisać wszystkie dane we wszystkie pola.'),
+            ));
+            return;
           }
           final isValid = formKey.currentState!.validate();
           if (!isValid) return;
@@ -142,15 +144,12 @@ class _AddPartsPageState extends State<AddPartsPage> {
     );
   }
 
-  Widget partTextField(
-      BuildContext context, TextEditingController controller, String name,
-      {int size = 1}) {
+  Widget partTextField(BuildContext context, TextEditingController controller, String name, {int size = 1}) {
     return Container(
       height: size > 1 ? 76 * 2 : 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        keyboardType:
-            name == 'Cena' ? TextInputType.number : TextInputType.text,
+        keyboardType: name == 'Cena' ? TextInputType.number : TextInputType.text,
         validator: (value) => value != null ? null : 'Pole nie może być puste',
         controller: controller,
         cursorColor: Theme.of(context).backgroundColor,

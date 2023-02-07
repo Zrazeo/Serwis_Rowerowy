@@ -16,24 +16,16 @@ class _FavoritesProductState extends State<FavoritesProduct> {
   final thisUser = FirebaseAuth.instance.currentUser!.displayName;
   int selectedCategories = 0;
   String searchedProduct = "";
-  List<String> categories = [
-    "Wszystkie",
-    "Górski",
-    "Miejski",
-    "BMX",
-    "Cross",
-    "Treking"
-  ];
+  List<String> categories = ["Wszystkie", "Górski", "Miejski", "BMX", "Cross", "Treking"];
 
   List? favorite;
 
   getUserFavorite() async {
-    var user = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(thisUser)
-        .get();
+    var user = await FirebaseFirestore.instance.collection('users').doc(thisUser).get();
     setState(() {
-      favorite = user.data()!['favorites'];
+      if (user.data() != null) {
+        favorite = user.data()!['favorites'];
+      }
     });
   }
 
@@ -63,8 +55,7 @@ class _FavoritesProductState extends State<FavoritesProduct> {
                 );
               }
               return ListView(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                  children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 var doc = document.data() as Map;
                 String id = document.id;
                 favorite = favorite ?? [];

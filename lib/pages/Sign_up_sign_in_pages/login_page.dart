@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart ';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/utils.dart';
 
 import '../../main.dart';
@@ -44,10 +44,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(10),
               child: const Text(
                 'Serwis rowerowy',
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30),
+                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 30),
               ),
             ),
             Container(
@@ -121,8 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.red,
               ),
               onPressed: () {
-                final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
                 provider.googleLogin();
               },
               label: const Text('Zaloguj się za pomocą Google'),

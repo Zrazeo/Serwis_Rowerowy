@@ -20,10 +20,7 @@ class ComparisonPageState extends State<ComparisonPage> {
   Map<String, dynamic> secondItemMap = {};
 
   void getFirstItem() async {
-    final firstItem = await FirebaseFirestore.instance
-        .collection('bike')
-        .doc(compareFirstBike)
-        .get();
+    final firstItem = await FirebaseFirestore.instance.collection('bike').doc(compareFirstBike).get();
 
     setState(() {
       firstItemMap = firstItem.data() as Map<String, dynamic>;
@@ -31,10 +28,7 @@ class ComparisonPageState extends State<ComparisonPage> {
   }
 
   void getSecondItem() async {
-    final secondItem = await FirebaseFirestore.instance
-        .collection('bike')
-        .doc(compareSecondBike)
-        .get();
+    final secondItem = await FirebaseFirestore.instance.collection('bike').doc(compareSecondBike).get();
 
     setState(() {
       secondItemMap = secondItem.data() as Map<String, dynamic>;
@@ -91,8 +85,7 @@ class ComparisonPageState extends State<ComparisonPage> {
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                              const Padding(
-                                  padding: EdgeInsets.only(right: 60)),
+                              const Padding(padding: EdgeInsets.only(right: 60)),
                               SizedBox(
                                 height: 100,
                                 width: 120,
@@ -104,8 +97,7 @@ class ComparisonPageState extends State<ComparisonPage> {
                             ],
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 15.0, right: 15),
+                            padding: const EdgeInsets.only(left: 15.0, right: 15),
                             child: DataTable(
                               columns: const [
                                 DataColumn(
@@ -120,11 +112,9 @@ class ComparisonPageState extends State<ComparisonPage> {
                               ],
                               rows: [
                                 DataRow(
-                                  color: MaterialStateProperty.all(
-                                      firstItemMap['brand'] ==
-                                              secondItemMap['brand']
-                                          ? Colors.white
-                                          : Colors.blue[200]),
+                                  color: MaterialStateProperty.all(firstItemMap['brand'] == secondItemMap['brand']
+                                      ? Colors.white
+                                      : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Marka")),
                                     DataCell(Text(firstItemMap['brand'])),
@@ -132,11 +122,9 @@ class ComparisonPageState extends State<ComparisonPage> {
                                   ],
                                 ),
                                 DataRow(
-                                  color: MaterialStateProperty.all(
-                                      firstItemMap['model'] ==
-                                              secondItemMap['model']
-                                          ? Colors.white
-                                          : Colors.blue[200]),
+                                  color: MaterialStateProperty.all(firstItemMap['model'] == secondItemMap['model']
+                                      ? Colors.white
+                                      : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Model")),
                                     DataCell(Text(firstItemMap['model'])),
@@ -144,23 +132,18 @@ class ComparisonPageState extends State<ComparisonPage> {
                                   ],
                                 ),
                                 DataRow(
-                                  color: MaterialStateProperty.all(
-                                      firstItemMap['price'] ==
-                                              secondItemMap['price']
-                                          ? Colors.white
-                                          : Colors.blue[200]),
+                                  color: MaterialStateProperty.all(firstItemMap['price'] == secondItemMap['price']
+                                      ? Colors.white
+                                      : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Cena")),
-                                    DataCell(Text(firstItemMap['price'])),
-                                    DataCell(Text(secondItemMap['price'])),
+                                    DataCell(Text('${firstItemMap['price']} zł')),
+                                    DataCell(Text('${secondItemMap['price']} zł')),
                                   ],
                                 ),
                                 DataRow(
                                   color: MaterialStateProperty.all(
-                                      firstItemMap['type'] ==
-                                              secondItemMap['type']
-                                          ? Colors.white
-                                          : Colors.blue[200]),
+                                      firstItemMap['type'] == secondItemMap['type'] ? Colors.white : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Typ roweru")),
                                     DataCell(Text(firstItemMap['type'])),
@@ -168,50 +151,41 @@ class ComparisonPageState extends State<ComparisonPage> {
                                   ],
                                 ),
                                 DataRow(
-                                  color: MaterialStateProperty.all(
-                                      firstItemMap['weight'] ==
-                                              secondItemMap['weight']
-                                          ? Colors.white
-                                          : Colors.blue[200]),
+                                  color: MaterialStateProperty.all(firstItemMap['weight'] == secondItemMap['weight']
+                                      ? Colors.white
+                                      : Colors.blue[200]),
                                   cells: [
-                                    const DataCell(Text("Waga (w kg)")),
-                                    DataCell(Text(firstItemMap['weight'])),
-                                    DataCell(Text(secondItemMap['weight'])),
+                                    const DataCell(Text("Waga")),
+                                    DataCell(Text('${firstItemMap['weight']} kg')),
+                                    DataCell(Text('${secondItemMap['weight']} kg')),
                                   ],
                                 ),
                                 DataRow(
                                   color: MaterialStateProperty.all(
-                                      firstItemMap['wheelSize'] ==
-                                              secondItemMap['wheelSize']
+                                      firstItemMap['wheelSize'] == secondItemMap['wheelSize']
                                           ? Colors.white
                                           : Colors.blue[200]),
                                   cells: [
-                                    const DataCell(
-                                        Text("Rozmiar kół (w calach)")),
-                                    DataCell(Text(firstItemMap['wheelSize'])),
-                                    DataCell(Text(secondItemMap['wheelSize'])),
+                                    const DataCell(Text("Rozmiar kół")),
+                                    DataCell(Text('${firstItemMap['wheelSize']}"')),
+                                    DataCell(Text('${secondItemMap['wheelSize']}"')),
                                   ],
                                 ),
                                 DataRow(
                                   color: MaterialStateProperty.all(
-                                      firstItemMap['rearDerailleur'] ==
-                                              secondItemMap['rearDerailleur']
+                                      firstItemMap['rearDerailleur'] == secondItemMap['rearDerailleur']
                                           ? Colors.white
                                           : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Przerzutki")),
-                                    DataCell(
-                                        Text(firstItemMap['rearDerailleur'])),
-                                    DataCell(
-                                        Text(secondItemMap['rearDerailleur'])),
+                                    DataCell(Text(firstItemMap['rearDerailleur'])),
+                                    DataCell(Text(secondItemMap['rearDerailleur'])),
                                   ],
                                 ),
                                 DataRow(
-                                  color: MaterialStateProperty.all(
-                                      firstItemMap['brakes'] ==
-                                              secondItemMap['brakes']
-                                          ? Colors.white
-                                          : Colors.blue[200]),
+                                  color: MaterialStateProperty.all(firstItemMap['brakes'] == secondItemMap['brakes']
+                                      ? Colors.white
+                                      : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Hamulce")),
                                     DataCell(Text(firstItemMap['brakes'])),
@@ -220,16 +194,13 @@ class ComparisonPageState extends State<ComparisonPage> {
                                 ),
                                 DataRow(
                                   color: MaterialStateProperty.all(
-                                      firstItemMap['shockAbsorber'] ==
-                                              secondItemMap['shockAbsorber']
+                                      firstItemMap['shockAbsorber'] == secondItemMap['shockAbsorber']
                                           ? Colors.white
                                           : Colors.blue[200]),
                                   cells: [
                                     const DataCell(Text("Amortyzatory")),
-                                    DataCell(
-                                        Text(firstItemMap['shockAbsorber'])),
-                                    DataCell(
-                                        Text(secondItemMap['shockAbsorber'])),
+                                    DataCell(Text(firstItemMap['shockAbsorber'])),
+                                    DataCell(Text(secondItemMap['shockAbsorber'])),
                                   ],
                                 ),
                               ],

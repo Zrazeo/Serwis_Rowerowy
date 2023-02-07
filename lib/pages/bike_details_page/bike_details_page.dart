@@ -57,8 +57,7 @@ class ProductDetailPage extends StatefulWidget {
   ProductDetailPageState createState() => ProductDetailPageState();
 }
 
-class ProductDetailPageState extends State<ProductDetailPage>
-    with TickerProviderStateMixin {
+class ProductDetailPageState extends State<ProductDetailPage> with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
   late String sellerUser;
@@ -72,10 +71,9 @@ class ProductDetailPageState extends State<ProductDetailPage>
   void initState() {
     super.initState();
     sellerUser = widget.owner;
-    controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-    animation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    animation =
+        Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
     getFavorite();
     isCompere = compareFirstBike == widget.id || compareSecondBike == widget.id;
@@ -90,15 +88,14 @@ class ProductDetailPageState extends State<ProductDetailPage>
   void getFavorite() async {
     String? thisUser = FirebaseAuth.instance.currentUser!.displayName;
 
-    var docSnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(thisUser)
-        .get();
+    var docSnapshot = await FirebaseFirestore.instance.collection('users').doc(thisUser).get();
 
     Map<String, dynamic>? data = docSnapshot.data();
     var value = data?['favorites'];
     setState(() {
-      userFavorites = value;
+      if (value != null) {
+        userFavorites = value;
+      }
     });
   }
 
@@ -144,8 +141,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
                   compareSecondBike = widget.id;
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                        'Możesz porównywać maksymalnie dwa elementy na raz!'),
+                    content: Text('Możesz porównywać maksymalnie dwa elementy na raz!'),
                   ));
                   return;
                 }
@@ -168,9 +164,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
             size: 30,
             isOutLine: false,
             onPressed: () {
-              isLiked
-                  ? removeFromFavorites(widget.id)
-                  : addToFavorites(widget.id);
+              isLiked ? removeFromFavorites(widget.id) : addToFavorites(widget.id);
               setState(
                 () {
                   isLiked = !isLiked;
@@ -256,8 +250,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
                     width: 50,
                     height: 5,
                     decoration: const BoxDecoration(
-                        color: Color(0xffa8a09b),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        color: Color(0xffa8a09b), borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -302,15 +295,13 @@ class ProductDetailPageState extends State<ProductDetailPage>
                 ),
                 _description("Opis", widget.description),
                 _description("Typ roweru", widget.type),
-                _description("Rodzaj i rozmiar ramy",
-                    "${widget.typeMaleFemale} ${widget.typeOfFrame} ${widget.sizeOfFrame}"),
+                _description(
+                    "Rodzaj i rozmiar ramy", "${widget.typeMaleFemale} ${widget.typeOfFrame} ${widget.sizeOfFrame}"),
                 _description("Waga", widget.weight, helpText: 'kg'),
                 _description("Rozmiar koła", widget.wheelSize, helpText: '″'),
-                _description("Przerzutki i ich liczba",
-                    "${widget.rearDerailleur} ${widget.numberOfGears}"),
+                _description("Przerzutki i ich liczba", "${widget.rearDerailleur} ${widget.numberOfGears}"),
                 _description("Hamulce", widget.brakes),
-                _description("Amortyzatory przedni i tylni",
-                    "${widget.frontShockAbsorber} ${widget.shockAbsorber}"),
+                _description("Amortyzatory przedni i tylni", "${widget.frontShockAbsorber} ${widget.shockAbsorber}"),
               ],
             ),
           ),
@@ -340,8 +331,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
     return FloatingActionButton(
       onPressed: onPressedFloatingActionButton,
       backgroundColor: AppStandardsColors.backgroundColor,
-      child: Icon(Icons.message,
-          color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
+      child: Icon(Icons.message, color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
     );
   }
 
@@ -382,10 +372,8 @@ class ProductDetailPageState extends State<ProductDetailPage>
   void onPressedFloatingActionButton() async {
     String id = '${thisUser}_$sellerUser';
     String id1 = '${sellerUser}_$thisUser';
-    final check =
-        await FirebaseFirestore.instance.collection('messages').doc(id).get();
-    final check1 =
-        await FirebaseFirestore.instance.collection('messages').doc(id1).get();
+    final check = await FirebaseFirestore.instance.collection('messages').doc(id).get();
+    final check1 = await FirebaseFirestore.instance.collection('messages').doc(id1).get();
     if (check.data() == null && check1.data() == null) {
       FirebaseFirestore.instance.collection('messages').doc(id).set({
         'user1': thisUser,
@@ -410,9 +398,7 @@ class ProductDetailPageState extends State<ProductDetailPage>
 }
 
 extension OnPressed on Widget {
-  Widget ripple(Function onPressed,
-          {BorderRadiusGeometry borderRadius =
-              const BorderRadius.all(Radius.circular(5))}) =>
+  Widget ripple(Function onPressed, {BorderRadiusGeometry borderRadius = const BorderRadius.all(Radius.circular(5))}) =>
       Stack(
         children: <Widget>[
           this,

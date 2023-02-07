@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sklep_rowerowy/pages/bike_page/bike_page.dart';
@@ -25,8 +25,7 @@ class MyDrawer extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  user.photoURL ?? 'https://i.imgur.com/UOV4frY.png'),
+              backgroundImage: NetworkImage(user.photoURL ?? 'https://i.imgur.com/UOV4frY.png'),
             ),
             accountEmail: Text(user.email!),
             accountName: Text(

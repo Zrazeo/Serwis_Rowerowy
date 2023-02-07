@@ -53,8 +53,7 @@ class MyPartsDetails extends StatelessWidget {
               child: Card(
                 margin: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
                 color: AppStandardsColors.accentColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
               ),
             ),
             Card(
@@ -62,8 +61,7 @@ class MyPartsDetails extends StatelessWidget {
               semanticContainer: true,
               elevation: 10,
               color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -93,22 +91,13 @@ class MyPartsDetails extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          Text(
-                            brand,
-                            style: const TextStyle(
-                              color: AppStandardsColors.textLightColor,
-                              fontSize: 16,
-                            ),
-                          ),
                           const SizedBox(
                             height: 5,
                           ),
                           Text(
                             "$price zł",
                             style: const TextStyle(
-                                color: AppStandardsColors.accentColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                color: AppStandardsColors.accentColor, fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ],
                       ),
@@ -164,8 +153,7 @@ class MyPartsDetails extends StatelessWidget {
       );
 
   Future<Map<String, dynamic>> getData() async {
-    var data =
-        await FirebaseFirestore.instance.collection('parts').doc(id).get();
+    var data = await FirebaseFirestore.instance.collection('parts').doc(id).get();
     return data.data() as Map<String, dynamic>;
   }
 
@@ -184,10 +172,7 @@ class MyPartsDetails extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () async {
-                    await FirebaseFirestore.instance
-                        .collection('parts')
-                        .doc(id)
-                        .delete();
+                    await FirebaseFirestore.instance.collection('parts').doc(id).delete();
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   },

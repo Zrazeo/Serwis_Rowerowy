@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -48,8 +48,7 @@ class _AddProductPageState extends State<AddProductPage> {
   String dropdownValueTypeMaleFemale = 'Męski';
   String dropdownValueSizeOfFrame = 'L';
 
-  dropdownButtonFormField(List<String> listItem, String dropdownValue,
-      Function function, String name) {
+  dropdownButtonFormField(List<String> listItem, String dropdownValue, Function function, String name) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7),
       height: 67,
@@ -133,35 +132,22 @@ class _AddProductPageState extends State<AddProductPage> {
                 bikeTextField(context, brand, 'Marka'),
                 bikeTextField(context, model, 'Model'),
                 dropdownButtonFormField(
-                    ['Górski', 'Miejski', 'BMX', 'Cross', 'Treking'],
-                    dropdownValueType,
-                    changeType,
-                    'Rodzaj'),
+                    ['Górski', 'Miejski', 'BMX', 'Cross', 'Treking'], dropdownValueType, changeType, 'Rodzaj'),
                 bikeTextField(context, price, 'Cena'),
                 bikeTextField(context, weight, 'Waga'),
                 bikeTextField(context, color, 'Kolor'),
                 bikeTextField(context, brakes, 'Hamulce'),
-                bikeTextField(
-                    context, frontShockAbsorber, 'Przedni amortyzator'),
+                bikeTextField(context, frontShockAbsorber, 'Przedni amortyzator'),
                 bikeTextField(context, shockAbsorber, 'Tylni amortyzator'),
                 bikeTextField(context, numberOfGears, 'Liczba przerzutek'),
                 bikeTextField(context, rearDerailleur, 'Przerzutka tylna'),
                 bikeTextField(context, frontDerailleur, 'Przerzutka przednia'),
+                dropdownButtonFormField(['Stal', 'Aluminium', 'Carbon', 'Magnez', 'Tytan'], dropdownValueTypeOfFrame,
+                    changeTypeOfFrame, 'Rodzaj ramy'),
                 dropdownButtonFormField(
-                    ['Stal', 'Aluminium', 'Carbon', 'Magnez', 'Tytan'],
-                    dropdownValueTypeOfFrame,
-                    changeTypeOfFrame,
-                    'Rodzaj ramy'),
-                dropdownButtonFormField(
-                    ['S', 'M', 'L', 'XL'],
-                    dropdownValueSizeOfFrame,
-                    changeSizeOfFrame,
-                    'Rozmiar ramy'),
-                dropdownButtonFormField(
-                    ['Damski', 'Męski', 'Unisex'],
-                    dropdownValueTypeMaleFemale,
-                    changeTypeMaleFemale,
-                    'Rodzaj damski/męski'),
+                    ['S', 'M', 'L', 'XL'], dropdownValueSizeOfFrame, changeSizeOfFrame, 'Rozmiar ramy'),
+                dropdownButtonFormField(['Damski', 'Męski', 'Unisex'], dropdownValueTypeMaleFemale,
+                    changeTypeMaleFemale, 'Rodzaj damski/męski'),
                 bikeTextField(context, wheelSize, 'Rozmiar kół'),
                 bikeTextField(context, description, 'Opis', size: 5),
                 if (downloadURL != null)
@@ -184,10 +170,8 @@ class _AddProductPageState extends State<AddProductPage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppStandardsColors.backgroundColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
-                          textStyle: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
+                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                       onPressed: () async {
                         // ignore: deprecated_member_use
                         PickedFile? pickedFile = await ImagePicker().getImage(
@@ -207,8 +191,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         } on FirebaseStorage catch (e) {
                           print(e);
                         }
-                        String url =
-                            await storage.ref('test/$uid').getDownloadURL();
+                        String url = await storage.ref('test/$uid').getDownloadURL();
                         setState(() {
                           downloadURL = url;
                         });
@@ -230,6 +213,29 @@ class _AddProductPageState extends State<AddProductPage> {
           if (downloadURL == null) {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text('Musisz dodać zdjęcie rowera do ogłoszenia!'),
+            ));
+            return;
+          } else if (brand.text.isEmpty ||
+              model.text.isEmpty ||
+              brand.text.isEmpty ||
+              model.text.isEmpty ||
+              dropdownValueType.isEmpty ||
+              price.text.isEmpty ||
+              weight.text.isEmpty ||
+              color.text.isEmpty ||
+              brakes.text.isEmpty ||
+              frontShockAbsorber.text.isEmpty ||
+              shockAbsorber.text.isEmpty ||
+              numberOfGears.text.isEmpty ||
+              rearDerailleur.text.isEmpty ||
+              frontDerailleur.text.isEmpty ||
+              dropdownValueTypeOfFrame.isEmpty ||
+              dropdownValueSizeOfFrame.isEmpty ||
+              dropdownValueTypeMaleFemale.isEmpty ||
+              wheelSize.text.isEmpty ||
+              description.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Musisz wpisać wszystkie dane we wszystkie pola.'),
             ));
             return;
           }
@@ -263,17 +269,12 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Widget bikeTextField(
-      BuildContext context, TextEditingController controller, String name,
-      {int size = 1}) {
+  Widget bikeTextField(BuildContext context, TextEditingController controller, String name, {int size = 1}) {
     return Container(
       height: size > 1 ? 76 * 2 : 76,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        keyboardType: name == 'Cena' ||
-                name == 'Liczba przerzutek' ||
-                name == 'Rozmiar kół' ||
-                name == 'Waga'
+        keyboardType: name == 'Cena' || name == 'Liczba przerzutek' || name == 'Rozmiar kół' || name == 'Waga'
             ? TextInputType.number
             : TextInputType.text,
         validator: (value) => value != null ? null : 'Pole nie może być puste',

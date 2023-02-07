@@ -32,8 +32,7 @@ class PartsDetailPage extends StatefulWidget {
   PartsDetailPageState createState() => PartsDetailPageState();
 }
 
-class PartsDetailPageState extends State<PartsDetailPage>
-    with TickerProviderStateMixin {
+class PartsDetailPageState extends State<PartsDetailPage> with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
   late String sellerUser;
@@ -46,10 +45,9 @@ class PartsDetailPageState extends State<PartsDetailPage>
   void initState() {
     super.initState();
     sellerUser = widget.owner;
-    controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-    animation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    animation =
+        Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
     getFavorite();
   }
@@ -63,15 +61,14 @@ class PartsDetailPageState extends State<PartsDetailPage>
   void getFavorite() async {
     String? thisUser = FirebaseAuth.instance.currentUser!.displayName;
 
-    var docSnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(thisUser)
-        .get();
+    var docSnapshot = await FirebaseFirestore.instance.collection('users').doc(thisUser).get();
 
     Map<String, dynamic>? data = docSnapshot.data();
     var value = data?['favorites'];
     setState(() {
-      userFavorites = value;
+      if (value != null) {
+        userFavorites = value;
+      }
     });
   }
 
@@ -178,8 +175,7 @@ class PartsDetailPageState extends State<PartsDetailPage>
                     width: 50,
                     height: 5,
                     decoration: const BoxDecoration(
-                        color: Color(0xffa8a09b),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        color: Color(0xffa8a09b), borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -252,8 +248,7 @@ class PartsDetailPageState extends State<PartsDetailPage>
     return FloatingActionButton(
       onPressed: onPressedFloatingActionButton,
       backgroundColor: AppStandardsColors.backgroundColor,
-      child: Icon(Icons.message,
-          color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
+      child: Icon(Icons.message, color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
     );
   }
 
@@ -294,10 +289,8 @@ class PartsDetailPageState extends State<PartsDetailPage>
   void onPressedFloatingActionButton() async {
     String id = '${thisUser}_$sellerUser';
     String id1 = '${sellerUser}_$thisUser';
-    final check =
-        await FirebaseFirestore.instance.collection('messages').doc(id).get();
-    final check1 =
-        await FirebaseFirestore.instance.collection('messages').doc(id1).get();
+    final check = await FirebaseFirestore.instance.collection('messages').doc(id).get();
+    final check1 = await FirebaseFirestore.instance.collection('messages').doc(id1).get();
     if (check.data() == null && check1.data() == null) {
       FirebaseFirestore.instance.collection('messages').doc(id).set({
         'user1': thisUser,
@@ -322,9 +315,7 @@ class PartsDetailPageState extends State<PartsDetailPage>
 }
 
 extension OnPressed on Widget {
-  Widget ripple(Function onPressed,
-          {BorderRadiusGeometry borderRadius =
-              const BorderRadius.all(Radius.circular(5))}) =>
+  Widget ripple(Function onPressed, {BorderRadiusGeometry borderRadius = const BorderRadius.all(Radius.circular(5))}) =>
       Stack(
         children: <Widget>[
           this,
@@ -361,8 +352,6 @@ class TitleText extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: GoogleFonts.mulish(
-            fontSize: fontSize, fontWeight: fontWeight, color: color));
+    return Text(text, style: GoogleFonts.mulish(fontSize: fontSize, fontWeight: fontWeight, color: color));
   }
 }

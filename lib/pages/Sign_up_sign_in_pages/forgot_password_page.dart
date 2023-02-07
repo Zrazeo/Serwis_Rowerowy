@@ -1,5 +1,5 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart%20';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sklep_rowerowy/main.dart';
 import 'package:sklep_rowerowy/pages/Sign_up_sign_in_pages/widget/utils.dart';
@@ -33,10 +33,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               padding: const EdgeInsets.all(10),
               child: const Text(
                 'Wprowadź email żeby\n    zresetować hasło',
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30),
+                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 30),
               ),
             ),
             Container(
@@ -49,9 +46,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (email) =>
-                    email != null && !EmailValidator.validate(email)
-                        ? 'Wprowadz poprawny email'
-                        : null,
+                    email != null && !EmailValidator.validate(email) ? 'Wprowadz poprawny email' : null,
               ),
             ),
             TextButton(
@@ -75,8 +70,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
     );
     try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text.trim());
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
 
       Utils.showSnackBar('Email do resetu hasła został wysłany');
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
