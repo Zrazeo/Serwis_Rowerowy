@@ -193,7 +193,11 @@ class ProductDetailPageState extends State<ProductDetailPage>
     return SizedBox(
       height: 40,
       width: 40,
-      child: Icon(icon, color: color, size: size),
+      child: Icon(
+        icon,
+        color: color,
+        size: size,
+      ),
     ).ripple(() {
       if (onPressed != null) {
         onPressed();
@@ -420,7 +424,9 @@ extension OnPressed on Widget {
             child: TextButton(
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(borderRadius: borderRadius),
+                  RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
                 ),
               ),
               onPressed: () => onPressed(),
@@ -447,6 +453,9 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
         style: GoogleFonts.mulish(
-            fontSize: fontSize, fontWeight: fontWeight, color: color));
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+        ));
   }
 }

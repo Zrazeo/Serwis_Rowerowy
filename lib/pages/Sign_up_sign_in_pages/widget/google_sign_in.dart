@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart ';
 import 'package:flutter/material.dart';
@@ -23,7 +25,6 @@ class GoogleSignInProvider extends ChangeNotifier {
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
-      // ignore: avoid_print
       print(e.toString());
     }
     User? thisUser = FirebaseAuth.instance.currentUser;
@@ -43,7 +44,6 @@ class GoogleSignInProvider extends ChangeNotifier {
     try {
       await googleSingIn.disconnect();
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
     FirebaseAuth.instance.signOut();
